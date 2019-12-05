@@ -20,12 +20,12 @@ int main() {
 		if(i <= vt[pos]){
 			cvt.push_back('+');
 			st.push(i);
-				while(st.top() == vt[pos]){ // && st.top() > vt[pos+1]){
-					cvt.push_back('-');
-					st.pop();
-					pos++;
-					if(st.size() <= 0) break;
-				}
+			while(st.top() == vt[pos]){ // && st.top() > vt[pos+1]){
+				cvt.push_back('-');
+				st.pop();
+				pos++;
+				if(st.size() <= 0) break;
+			}
 		}
 	}
 	bool check = true;
