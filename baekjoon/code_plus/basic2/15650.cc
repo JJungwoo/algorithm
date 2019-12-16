@@ -1,16 +1,14 @@
 /*
-[BOJ] 15649. N과 M
+[BOJ] 15650. N과 M(2)
 */
 #include <cstdio>
-#include <vector>
 using namespace std;
-const int MAX = 8;
+const int max = 8;
 int n,m;
-int arr[MAX+1];
-bool visited[MAX+1];
+int arr[max+1];
+bool visited[max+1];
 
-void dfs(int cnt)
-{
+void dfs(int idx, int cnt){
     if(cnt == m){
         for(int i=0;i<m;i++){
             printf("%d ", arr[i]);
@@ -19,12 +17,12 @@ void dfs(int cnt)
         return;
     }
 
-    for(int i=0;i<n;i++){
+    for(int i=idx;i<n;i++){
         if(!visited[i]){
             visited[i] = true;
             arr[cnt] = i+1;
-            dfs(cnt+1);
-            visited[i] = false;
+            dfs(i, cnt+1);    
+            visited[i] = false;        
         }
     }
 }
@@ -32,6 +30,6 @@ void dfs(int cnt)
 int main()
 {
     scanf("%d %d", &n, &m);
-    dfs(0);
+    dfs(0,0);
     return 0;
 }
