@@ -13,6 +13,7 @@ int main()
 {
     scanf("%d", &n);
     fill(dp, dp+n+1, 1e9);
+    //memset(dp, 1e9, sizeof(dp)); --> 틀림;
     for(int i=1;i<=n;i++) scanf("%d", &cardP[i]);
     dp[0] = 0;
     dp[1] = cardP[1];
