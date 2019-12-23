@@ -5,6 +5,7 @@ https://www.spoj.com/problems/GIVEAWAY/
 ref: https://github.com/krnbatra/SPOJ-Solutions/blob/master/GIVEAWAY.cpp
 */
 #include <cstdio>
+#include <algorithm>
 #include <vector>
 #include <cmath>
 using namespace std;
@@ -15,7 +16,7 @@ vector<int> sqc;
 void init(){
     sqc_idx = sqrt(n);
     for(int i=0;i<n;i++){
-        sqc[i/sqc_idx] += arr[i];
+        sqc[i/sqc_idx].push_back(arr[i]);
     }
 }
 void update(int idx, int value){
@@ -41,6 +42,9 @@ int main()
     sqc.resize(n+1);
     for(int i=0;i<n;i++) scanf("%lld", &arr[i]);
     init();
+    int sqc_blocks = ceil((double)n/sqc_idx);
+    for(int i=0;i<sqc_blocks;i++)
+        sort(sqc[i].begin(), sqc[i].end());
     scanf("%d", &q);
     for(int i=0;i<q;i++){
         int inputC;
