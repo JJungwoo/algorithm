@@ -11,9 +11,19 @@
 using namespace std;
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 
+int n;
+vector<vector<int> > house;
+
 int main()
 {
     io;
-
+    cin>>n;
+    house.resize(n + 1, vector<int>(3,0));
+ 
+    for(int i=0;i<n;i++){
+        cin>>house[i];
+        cout<<i<<":"<<house[i]<<"\n";
+    }
+    
     return 0;
 }
