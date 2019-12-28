@@ -1,6 +1,43 @@
 /*
 [BOJ] 14002. 가장 긴 증가하는 부분 수열 4
 */
+
+/*
+dp 방식 dp cache에 현재 위치보다 이전 위치의 값이 작다면 1씩 증가시켜서
+가장 최대가 되는 수열의 길이를 출력한다.
+*/
+#include <iostream>
+#include <vector>
+using namespace std;
+#define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+
+int n;
+int seq[1001], dp[1001];
+vector<int> ans;
+int main()
+{
+    //io;
+    printf("!@#!\n");
+    /*cin>>n;
+    for(int i=1;i<=n;i++) 
+        cin>>seq[i];
+    dp[1] = seq[1];
+    for(int i=1;i<=n;i++){
+        dp[i] = 1;
+        for(int j=1;j<i;j++){
+            if(seq[i] > seq[j] && dp[i] < dp[j]+1){
+                dp[i] = dp[j]+1;
+                ans.push_back(j);
+            }
+        }
+    }
+    */
+    cout<<dp[n]<<"\n";
+    return 0;
+}
+
+
+/*
 #include <iostream>
 using namespace std;
 int main()
@@ -36,4 +73,4 @@ int main()
     for(int z=0;z<=j;z++) cout<<lis[z]<<" ";
     return 0;
 }
-
+*/

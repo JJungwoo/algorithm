@@ -1,5 +1,7 @@
 /*
 [BOJ] 11054. 가장 긴 바이토닉 부분 수열
+가장 긴 바이토닉 부분 수열: 
+수열 S가 어떤 수 Sk를 기준으로 S1 < S2 < ... Sk-1 < Sk > Sk+1 > ... SN-1 > SN 인 수열
 n개의 값이 주어지면 n번째 위치에는 최대 바이토닉 수열 길이를 저장하면 된다.
 각각 dp 배열에 수열 값을 넣어주고 조건을 걸어서 바이토닉 수열인지 판별하고 바이토닉 수열이 되는 
 상황만 더해서 결국 n 위치에 최대값이 오는 상황만 만들면 되지 않을까??.
@@ -21,8 +23,34 @@ using namespace std;
 
 int n;
 vector<int> seq;
-vector<int> dp;
+vector<int> ldp;
+vector<int> rdp;
 
+void solve()
+{
+    for(int i=1;i<=n;i++){
+        ldp[i] = 1;
+        for(int j=1;j<=i;j++){
+            if(seq[j] < seq[i] && ldp[i] < ldp[j] + 1){
+                ldp[i] = ldp[j] + 1;
+            }
+        }
+    }
+    for(int i=n;i>=1;i--){
+        rdp[i] = 1;
+        for(int j=n;j>=i;j--){
+            if(seq[i] > seq[j] && rdp[j] + 1 > rdp[i]){
+                rdp[i] = rdp[j] + 1;
+            }
+        }
+    }
+    int ans = 0;
+    for(int i=1;i<=n;i++){
+        if(ans < ldp[i] + rdp[i] - 1)
+            ans = ldp[i] + rdp[i] - 1;
+    }
+    cout<<ans<<"\n";
+}
 int main()
 {
     io;
@@ -31,14 +59,11 @@ int main()
         cout<<n<<"\n";
         return 0;
     }
-    dp[1] = seq[1];
     seq.resize(n+1, 0);
-    dp.resize(n+1, 0);
+    ldp.resize(n+1, 0);
+    rdp.resize(n+1, 0);
     for(int i=1;i<=n;i++) cin>>seq[i];
-    dp[2] = seq[2];
-    for(int i=3;i<=n;i++){
-        dp[i] = 
-    }
-
+    solve();
+    
     return 0;
 }
