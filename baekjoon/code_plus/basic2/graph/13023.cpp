@@ -1,5 +1,6 @@
 /*
 [BOJ] 13023. ABCDE
+무방향 그래프에서 5개 이상의 연결이 되는지 확인하는 문제로 dfs를 통해 간단히 해결할 수 있다.
 */
 #include <iostream>
 #include <vector>
@@ -13,21 +14,21 @@ int ans;
 
 void dfs(int v, int depth)
 {
-    if(depth > 4){
+    if(depth > 3){
         ans = 1;
         return;
     }
     visited[v] = true;
     for(int i=0;i<re[v].size();i++){
         int k = re[v][i];
-        if(!visited[v])
+        if(!visited[k])
             dfs(k, depth + 1);
     }
-    visited[v] = false;
 }
 
 int main()
 {
+    io;
     cin>>n>>m; 
     for(int i=0;i<m;i++){
         int a, b;
@@ -38,8 +39,7 @@ int main()
 
     for(int i=0;i<n;i++){
         memset(visited, 0, sizeof(visited));
-        if(!visited[i])
-            dfs(i, 0);
+        dfs(i, 0);
         if (ans == 1) break;
     }
     cout<<ans<<"\n";
