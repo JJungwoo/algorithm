@@ -3,6 +3,8 @@
 입력받은 그래프 결과를 dfs와 bfs로 출력하는 문제이다.
 */
 #include <iostream>
+#include <cstring>
+#include <algorithm>
 #include <vector>
 #include <queue>
 using namespace std;

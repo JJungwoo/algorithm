@@ -3,6 +3,7 @@
 무방향 그래프에서 5개 이상의 연결이 되는지 확인하는 문제로 dfs를 통해 간단히 해결할 수 있다.
 */
 #include <iostream>
+#include <cstring>
 #include <vector>
 using namespace std;
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
@@ -14,7 +15,7 @@ int ans;
 
 void dfs(int v, int depth)
 {
-    if(depth > 3){
+    if(depth >= 4){
         ans = 1;
         return;
     }
@@ -24,6 +25,7 @@ void dfs(int v, int depth)
         if(!visited[k])
             dfs(k, depth + 1);
     }
+    visited[v] = false;
 }
 
 int main()
