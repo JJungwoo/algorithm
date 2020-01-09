@@ -10,7 +10,7 @@ https://www.acmicpc.net/board/view/34455
 */
 #include <iostream>
 #include <vector>
-#include <unordered_set>
+#include <stack>
 using namespace std;
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 
@@ -19,14 +19,15 @@ int n,idx = 1,ans;
 vector<int> v[MAX+1];
 bool visited[MAX+1];
 int check[MAX+1];
-unordered_set<int> us[MAX+1];
+int parent[MAX+1];
+bool chk_seq[MAX+1];
 
 void dfs(int x){
     if(visited[x]) return;
     visited[x] = true;
     for(int next : v[x]){
-        us[x].insert(next);
-        cout<<x<<":"<<next<<"\n";
+        if(!parent[next])
+            parent[next] = x;
         dfs(next);
     }
 }
@@ -44,15 +45,28 @@ int main()
     for(int i=0;i<n;i++) cin>>check[i];
     if(check[0] != 1) return cout<<"0\n", 0;
     dfs(1);
-    for(int i=1;i<n;i++){
-        cout<<i<<":"<<idx<<":"<<us[idx].count(check[i])<<"\n";
-        for(int j=idx;j<idx+us[i].size();j++){
-            if(us[j].count(check[i]) == 0){
-                return cout<<"0\n", 0;
+    stack<int> stk;
+    stk.push(1);
+    chk_seq[1] = true;
+    while(!stk.empty()){
+        bool isDFS = false;
+        int x = stk.top();
+        for(int next : v[x]){
+            //cout<<chk_seq[next]<<"next:"<<next<<"idx:"<<idx<<"!!"<<check[idx]<<":"<<parent[next]<<"\n";
+            if(!chk_seq[next] && parent[check[idx]] == x && check[idx] == next){
+                stk.push(next);
+                chk_seq[next] = true;
+                idx++;
+                isDFS = true;
+                break;
             }
+            
         }
-        idx++;
+        if(!isDFS){
+            stk.pop();
+        }
     }
-    cout<<"1\n";
+    if(idx == n) cout<<"1\n";
+    else cout<<"0\n";
     return 0;
 }
