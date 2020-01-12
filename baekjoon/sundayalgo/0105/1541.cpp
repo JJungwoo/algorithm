@@ -8,31 +8,28 @@ using namespace std;
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 
 string formula;
-vector<int> sum_arr;
 
 int main()
 {
     io;
     cin>>formula;
     int len = formula.size();
-    int subcnt = 0, sumcnt = 0, sum = 0;
+    int val = 0, mul = 1, flag = 1, ans = 0;
     for(int i=0;i<len;i++){
-        bool chk = false;
         if(formula[i] == '-'){
-            subcnt++;
-        }else if(formula[i] != '-' && formula[i] != '+'){
-            chk = true;
-            sum += formula
-        }
-
-        if(chk){
-            
+            flag = -1;
+            ans += val;
+            val = 0;
+        }else if(formula[i] == '+'){
+            ans += val;
+            val = 0;
+        }else {
+            val *= 10;
+            val += (formula[i]-'0')*flag;
         }
     }
-
-    cout<<subcnt<<"\n";
-
-
+    if(val) ans += val;
+    cout<<ans<<"\n";
 
     return 0;
 }
