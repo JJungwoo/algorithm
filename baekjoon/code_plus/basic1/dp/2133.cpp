@@ -1,20 +1,18 @@
 /*
-[BOJ] 2225. 합분해
+[BOJ] 2133. 타일 채우기
 */
 #include <iostream>
 #include <algorithm>
 using namespace std;
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 
-const int mod = 1e9;
-int n, k;
-int dp[201][201];
+int n;
+int dp;
 
 int main()
 {
     io;
-    cin>>n>>k;
-
+    cin>>n;
 
 
     return 0;

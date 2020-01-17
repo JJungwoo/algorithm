@@ -40,7 +40,6 @@ int main()
     for(int i=0;i<n;i++) {
         int tmp; scanf("%d", &tmp);
         arr.push_back(tmp);
-        if(!hash_arr[tmp]) hash_arr[tmp] = 1;
     }
     sort(arr.begin(), arr.end());
     dfs(0);
