@@ -4,14 +4,19 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-#define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 
 int n, m;
 int map[51][51];
+int dir[3][2] = {{0,1}, {-1,0}, {0,-1}};
+
+void dfs(int x, int y)
+{
+
+
+}
 
 int main()
 {
-    io;
     cin>>n>>m;
     for(int i=0;i<n;i++){
         for(int j=0;j<m;j++){
@@ -19,13 +24,9 @@ int main()
         }
     }
 
-    for(int i=0;i<n;i++){
+    for(int i=0;i<n-1;i++){
         for(int j=0;j<m-1;j++){
-            for(int z=j+1;z<m;z++){
-                if(map[i][j] == map[i][z]){
-                    int diff = z - j;
-                }
-            }
+            dfs(i,j);
         }
     }
     
