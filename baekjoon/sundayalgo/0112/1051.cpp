@@ -2,17 +2,21 @@
 [BOJ] 1051. 숫자 정사각형
 */
 #include <iostream>
-#include <vector>
+#include <algorithm>
 using namespace std;
 
-int n, m;
+int n, m, ans;
 int map[51][51];
-int dir[3][2] = {{0,1}, {-1,0}, {0,-1}};
 
-void dfs(int x, int y)
-{
-
-
+void find_dff(int x, int y) {
+    for(int i=y+1;i<m;i++){
+        int diff = i - y;
+        if(y+diff >= m || x+diff >= n) continue;
+        if(map[x][y] == map[x][i] && map[x][y] == map[x + diff][y + diff] 
+            && map[x][y] == map[x + diff][y]){
+            ans = max(ans, (diff+1)*(diff+1));
+        }
+    }
 }
 
 int main()
@@ -24,11 +28,13 @@ int main()
         }
     }
 
-    for(int i=0;i<n-1;i++){
-        for(int j=0;j<m-1;j++){
-            dfs(i,j);
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            find_dff(i, j);
         }
     }
+    if(!ans) printf("1\n");
+    else printf("%d\n",ans);
     
     return 0;
 }
