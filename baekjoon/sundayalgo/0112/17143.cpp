@@ -71,6 +71,7 @@ int main()
     while(1)
     {
         kyp = king;
+        // catch shark
         for(int i=0;i<len;i++){
             if(sharks[i].live && sharks[i].x == )
         }
@@ -78,7 +79,7 @@ int main()
         sharkMoveAndCrash();
 
         if(!livesharks) {
-            cout<<ans"\n";
+            cout<<ans<<"\n";
             return 0;
         }
         if(king >= c) flag *= -1;

@@ -27,7 +27,9 @@ void bfs(int x, int y, bool c){
             if(c) {
                 if(map[x][y] == 'B' && (map[dx][dy] == 'R' || map[dx][dy] == 'G')) continue;
                 else if(map[x][y] != 'B' && map[dx][dy] == 'B') continue;
-            }else if(!c && map[x][y] != map[dx][dy]) continue;
+            }else {
+                if(!c && map[x][y] != map[dx][dy]) continue;
+            }
             visited[dx][dy] = true;
             q.push(make_pair(dx,dy));
         }
