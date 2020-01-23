@@ -15,9 +15,9 @@ using namespace std;
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 
 int n;
-int seq[10001];
+int seq[10001]
 
-bool next_permutation(int *seq, int n)
+bool next_permutation()
 {
     int i = n;
     while(i > 1 && seq[i] <= seq[i-1]){    // 뒤에서부터 오름차순으로 되어 있는 순열 찾기.
@@ -46,7 +46,7 @@ int main()
     cin>>n;
     for(int i=1;i<=n;i++) cin>>seq[i];
  
-    if(next_permutation(seq, n)) {
+    if(next_permutation()) {
         for(int i=1;i<=n;i++){
             cout<<seq[i]<<" ";
         }
