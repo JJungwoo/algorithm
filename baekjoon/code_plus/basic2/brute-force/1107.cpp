@@ -16,29 +16,42 @@ ex) 67을 찾는데 6이 고장이면 일단 7버튼 누르고 (1cnt)
 70에서부터 - 연산 카운팅을 해준다.
 */
 #include <iostream>
+#include <cmath>
 using namespace std;
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 
-int cn, n[500001];
-int cm, m[11];
-int ans
+int target_channel, n[500001];
+bool xbtn[10];
+int start=100, cbtn;
 
 void solve()
 {
-
+    int len = 0;
+    int num = target_channel;
+    while(num/=10){
+        len += 1;
+    }
+    cout<<len<<"\n";
+    cout<<abs(target_channel - start)<<"\n";
 
 }
 
 int main()
 {
     io;
-    cin>>cn;
-    cin>>cm;
-    for(int i=0;i<cm;i++) cin>>m[i];
-
+    cin>>target_channel;
+    cin>>cbtn;
+    for(int i=0;i<cbtn;i++) {
+        int temp; cin>>temp;
+        xbtn[temp] = true;
+    }
+    if(start == target_channel){     // 100 이면 끝
+        cout<<"0\n";
+        return 0;
+    }
     solve();
 
-    cout<<ans<<"\n";
+    //cout<<ans<<"\n";
 
     return 0;
 }
