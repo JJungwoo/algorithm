@@ -15,25 +15,43 @@
 ex) 67을 찾는데 6이 고장이면 일단 7버튼 누르고 (1cnt)
 70에서부터 - 연산 카운팅을 해준다.
 */
+
 #include <iostream>
 #include <cmath>
 using namespace std;
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 
+const int MAX = 1e6;
 int target_channel, n[500001];
 bool xbtn[10];
-int start=100, cbtn;
+int start=100, cbtn, ans;
 
-void solve()
+int solve()
 {
-    int len = 0;
-    int num = target_channel;
-    while(num/=10){
-        len += 1;
+    ans = abs(target_channel - start);
+    for(int i=0;i<=MAX;i++){
+        int tempCnt = 0;
+        int temp = i;
+        int flag = 0;
+        if(i == 0){
+            tempCnt++;
+            if(xbtn[0] == 1)
+                continue;
+        }
+        while(temp > 0){    // 버튼을 눌러서 접근하는 경우의 수 계산
+            if(xbtn[temp%10] == true){
+                flag = 1;
+                break;
+            }
+            tempCnt++;
+            temp /= 10;
+        }
+        if(flag) continue;
+        tempCnt += abs(target_channel - i);     // +, - 버튼 연산 처리, 결국 가장 차이가 작은걸 찾으면 된다.
+        if(tempCnt < ans)
+            ans = tempCnt;
     }
-    cout<<len<<"\n";
-    cout<<abs(target_channel - start)<<"\n";
-
+    return ans;
 }
 
 int main()
@@ -49,9 +67,7 @@ int main()
         cout<<"0\n";
         return 0;
     }
-    solve();
-
-    //cout<<ans<<"\n";
+    cout<<solve()<<"\n";
 
     return 0;
 }
