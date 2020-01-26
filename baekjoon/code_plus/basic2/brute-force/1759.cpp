@@ -6,7 +6,55 @@
 #include <algorithm>
 using namespace std;
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
-    
+
+// dfs failed...
+
+int l, c;
+char dict[16];
+char output[6];
+
+void dfs(int x, int count, int vcnt, int jcnt) {
+	if(count == l && vcnt >= 1 && jcnt >= 2){
+		for(int i=0;i<l;i++){
+			cout<<output[i];
+		}
+		cout<<"\n";
+		return;
+	}
+
+	for(int i=x;i<c;i++){
+		if(dict[i] == 'a' || dict[i] == 'e' || dict[i] == 'i' ||
+			dict[i] == 'o' || dict[i] == 'u' )
+		{
+			vcnt++;
+			output[count] = dict[i];
+			dfs(i + 1, count + 1, vcnt, jcnt);
+			vcnt--;
+		} else {
+			jcnt++;
+			output[count] = dict[i];
+			dfs(i + 1, count + 1, vcnt, jcnt);
+			jcnt--;
+		}
+	}
+
+}
+
+int main()
+{
+	io;
+	cin>>l>>c;
+	for(int i=0;i<c;i++) cin>>dict[i];
+	sort(dict, dict+c);
+	
+	dfs(0,0,0,0);
+
+	return 0;	
+}
+
+
+// next_permutation fail..
+/*
 int l, c;
 char dict[16];
 char vowel[5] = {'a', 'e', 'i', 'o', 'u'};
@@ -19,21 +67,21 @@ int main()
 	sort(dict, dict+l);
 	
 	do{
-		int vcnt = 0, check = 0;
-		for(int i=0;i<l;i++){
-			check = 0;
-			for(int j=0;j<5;j++){
-				if(dict[i] == vowel[j]){
-					if(vcnt){
-						check = 1;
-					}
-					vcnt++;
-					break;
-				}
+		int vcnt = 0, check = 1;
+		for(int i=0;i<c;i++){
+			if(dict[i] == 'a' || dict[i] == 'e' || dict[i] == 'i' ||
+				dict[i] == 'o' || dict[i] == 'u' )
+			{
+				if(vcnt >= 2)
+					continue;
+				vcnt++;
 			}
-			if(check == 0)
-				cout<<dict[i]<<" ";
-			else l+1;
+
+			cout<<dict[i]<<" ";
+			if(check == l){
+				break;
+			}
+			check++;
 		}
 
 		cout<<"\n";
@@ -41,3 +89,4 @@ int main()
 
 	return 0;
 }
+*/
