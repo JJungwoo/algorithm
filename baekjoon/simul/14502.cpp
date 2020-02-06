@@ -10,6 +10,27 @@
 using namespace std;
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 
+int n,m,ans;
+int map[8][8];
+int map_copy[8][8];
+
+int main()
+{
+	io;
+	cin>>n>>m;
+	for(int i=0;i<n;i++){
+		for(int j=0;j<m;j++){
+			cin>>map[i][j];
+			map_copy[i][j] = map[i][j];
+		}
+	}
+
+	
+
+	return 0;
+}
+
+/*
 int n, m, ans;
 int map[8][8];
 int map_copy[8][8];
@@ -100,6 +121,7 @@ int main()
 	cout<<ans<<"\n";
 	return 0;
 }
+*/
 
 /*
 int n, m, safezone = -3, ans = 1e9;
