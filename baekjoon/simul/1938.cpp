@@ -18,32 +18,7 @@ struct wood{
 
 wood my;
 wood des;
-int dir[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-
-void bfs(){
-    queue<pair<pair<int, int>, pair<int, int> > > qp;
-    qp.push(make_pair(make_pair(my.x, my.y), make_pair(my.dir, 0));
-    while(!qp.empty()){
-        int x = qp.front().first.first, y = qp.front().first.second;
-        int dir = qp.front().second.first, cnt = qp.front().second.second;
-        if(des.x == x && des.y == y && des.dir == dir){
-            ans = min(ans, cnt);
-        }
-        qp.pop();
-        for(int i=0;i<5;i++){
-            if(i == 4){ // turn
-                if(!turn_check(mx,my,dir)) continue;
-                if(dir) qp.push(make_pair(make_pair(mx,my),make_pair(0, cnt+1)));
-                else qp.push(make_pair(make_pair(mx,my),make_pair(1, cnt+1))); 
-            }else {
-                int mx = x + dir[i][0], my = y + dir[i][1];
-                if(mx < 0 || my < 0 || mx >= n || my >= n) continue;
-                if(!move_check(mx,my,dir)) continue;
-                qp.push(make_pair(make_pair(mx,my),make_pair(dir, cnt+1)));
-            }
-        }
-    }
-}
+int d[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
 bool turn_check(int x, int y, int dir){   // dir 0 :가로, 1: 세로
     if(dir){
@@ -69,6 +44,33 @@ bool move_check(int x, int y, int dir){   // dir 0 :가로, 1: 세로
         }
     }
     return true;
+}
+
+void bfs(){
+    queue<pair<pair<int, int>, pair<int, int> > > qp;
+    qp.push(make_pair(make_pair(my.x, my.y), make_pair(my.dir, 0)));
+    while(!qp.empty()){
+        int x = qp.front().first.first, y = qp.front().first.second;
+        int dir = qp.front().second.first, cnt = qp.front().second.second;
+        cout<<"x:"<<x<<" y:"<<y<<" dir:"<<dir<<" cnt:"<<cnt<<"\n";
+        if(des.x == x && des.y == y && des.dir == dir){
+            ans = min(ans, cnt);
+            return;
+        }
+        qp.pop();
+        for(int i=0;i<5;i++){
+            if(i == 4){ // turn
+                if(!turn_check(x,y,dir)) continue;
+                if(dir) qp.push(make_pair(make_pair(x,y),make_pair(0, cnt+1)));
+                else qp.push(make_pair(make_pair(x,y),make_pair(1, cnt+1))); 
+            }else {
+                int mx = x + d[i][0], my = y + d[i][1];
+                if(mx < 0 || my < 0 || mx >= n || my >= n) continue;
+                if(!move_check(mx,my,dir)) continue;
+                qp.push(make_pair(make_pair(mx,my),make_pair(dir, cnt+1)));
+            }
+        }
+    }
 }
 
 int main()
