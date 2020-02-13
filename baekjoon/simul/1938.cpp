@@ -8,8 +8,10 @@
 using namespace std;
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 
-int n, ans;
+const int MAX = 987654321;
+int n, ans = MAX;
 char map[51][51];
+bool visited[51][51][2];
 
 struct wood{
     int x,y;
@@ -20,29 +22,26 @@ wood my;
 wood des;
 int d[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
-bool turn_check(int x, int y, int dir){   // dir 0 :가로, 1: 세로
-    if(dir){
-        if(x-1 < 0 || x+1 >= n || map[x-1][y] == 1 || map[x+1][y] == 1){
+bool move_check(int x, int y, int dir){   // dir 0 :가로, 1: 세로
+    if(map[x][y] == '1') return false;
+    if(!dir){
+        if(y-1 < 0 || y+1 >= n || map[x][y-1] == '1' || map[x][y+1] == '1'){
             return false;
         }
-    }else {
-        if(y-1 < 0 || y+1 >= n || map[x][y-1] == 1 || map[x][y+1] == 1){
+    }else{
+        if(x-1 < 0 || x+1 >= n || map[x-1][y] == '1' || map[x+1][y] == '1'){
             return false;
         }
     }
     return true;
 }
 
-bool move_check(int x, int y, int dir){   // dir 0 :가로, 1: 세로
-    if(dir){
-        if(y-1 < 0 || y+1 >= n || map[x][y-1] == 1 || map[x][y+1] == 1){
-            return false;
-        }
-    }else{
-        if(x-1 < 0 || x+1 >= n || map[x-1][y] == 1 || map[x+1][y] == 1){
-            return false;
-        }
-    }
+bool turn_check(int x, int y){
+    if(map[x][y] == '1') return false;
+    if(x - 1 < 0 || y - 1 < 0 || x + 1 >= n || y + 1 >= n) return false;
+    if(map[x-1][y-1] == '1' || map[x-1][y] == '1' || map[x-1][y+1] == '1') return false;
+    if(map[x][y-1] == '1' || map[x][y+1] == '1' ) return false;
+    if(map[x+1][y-1] == '1' || map[x+1][y] == '1' || map[x+1][y+1] == '1') return false;
     return true;
 }
 
@@ -52,21 +51,26 @@ void bfs(){
     while(!qp.empty()){
         int x = qp.front().first.first, y = qp.front().first.second;
         int dir = qp.front().second.first, cnt = qp.front().second.second;
-        cout<<"x:"<<x<<" y:"<<y<<" dir:"<<dir<<" cnt:"<<cnt<<"\n";
+        //cout<<"x:"<<x<<" y:"<<y<<" dir:"<<dir<<" cnt:"<<cnt<<"\n";
         if(des.x == x && des.y == y && des.dir == dir){
             ans = min(ans, cnt);
-            return;
+            //return;
         }
         qp.pop();
         for(int i=0;i<5;i++){
             if(i == 4){ // turn
-                if(!turn_check(x,y,dir)) continue;
-                if(dir) qp.push(make_pair(make_pair(x,y),make_pair(0, cnt+1)));
-                else qp.push(make_pair(make_pair(x,y),make_pair(1, cnt+1))); 
+                int go_dir = (dir == 1 ? 0 : 1);
+                if(visited[x][y][go_dir]) continue;
+                if(!turn_check(x,y)) continue;
+                visited[x][y][go_dir] = true;
+                qp.push(make_pair(make_pair(x,y),make_pair(go_dir, cnt+1))); 
             }else {
                 int mx = x + d[i][0], my = y + d[i][1];
+                if(visited[mx][my][dir]) continue;
                 if(mx < 0 || my < 0 || mx >= n || my >= n) continue;
                 if(!move_check(mx,my,dir)) continue;
+                //cout<<"!!! mx:"<<mx<<" my:"<<my<<" dir:"<<dir<<" cnt:"<<cnt<<"\n";
+                visited[mx][my][dir] = true;
                 qp.push(make_pair(make_pair(mx,my),make_pair(dir, cnt+1)));
             }
         }
@@ -117,6 +121,7 @@ int main()
     }
     
     bfs();    
-    cout<<ans<<"\n";
+    if(ans == MAX) cout<<"0\n";
+    else cout<<ans<<"\n";
     return 0;
 }
