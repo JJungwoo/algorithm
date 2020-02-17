@@ -1,5 +1,5 @@
 /*
-[BOJ] 14888. 연산자 끼워넣기
+[BOJ] 14225. 부분수열의 합
 */
 
 #include <iostream>
@@ -11,9 +11,20 @@ using namespace std;
 int n;
 int numbers[11];
 int formula[4]; // +, -, *, /
-void solve(){
-    
+void solve(int cnt){
+    if(cnt == )
+}
 
+int calc(vector<int> &a, vector<int> &b){
+    int n = a.size();
+    int ans = a[0];
+    for(int i=1;i<n;i++){
+        if(b[i-1] == 0){
+            ans = ans + a[i];
+        } else if (b[i-1] == 1){
+            ans = ans - a[i];
+        }
+    }
 }
 
 int main()
