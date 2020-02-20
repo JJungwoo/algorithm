@@ -1,5 +1,14 @@
 /*
 [BOJ] 16235. 나무 재테크
+https://www.acmicpc.net/board/view/41315
+구조체 정렬
+https://okky.kr/article/397425
+벡터 원소 삭제
+https://inpages.tistory.com/134
+solve
+https://ideone.com/7hIIcu
+solve2
+https://seungahyoo.tistory.com/68
 */
 
 #include <iostream>
