@@ -20,31 +20,35 @@ int dir[8][2] =
 bool move_check(int x, int y)
 {
 	for(int i=0;i<8;i++){
-		int mx = x + dir[i][0], my = y + dir[i][0];
-		if(mx < 0 || my < 0 || mx >= n || my >= m) return false;
-		if(visited[mx][my]) return false;
-
+		int mx = x, my = y;
+		while(1){
+			//cout<<"mx: "<<mx<<" my: "<<my<<"\n";
+			mx += dir[i][0];
+			my += dir[i][1];
+			if(mx < 0 || my < 0 || mx >= n || my >= n) break;
+			if(visited[mx][my]) return false;
+		}
 	}
 	return true;
 }
 
 void dfs(int x, int y, int cnt)
 {
-	if(cnt == n){
+	if(cnt == n+1){
 		ans++;
+		return;
 	}
 
-	for(int i=0;i<n;i++){
+	//for(int i=x;i<n;i++){
 		for(int j=0;j<n;j++){
-			if(visited[i][j]) continue;
-			if(move_check == false) continue;			
-			visited[i][j] = true;
-			dfs(i, j, cnt+1);
-			visited[i][j] = false;
+			if(visited[x][j]) continue;
+			if(move_check(x, j) == false) continue;
+			//cout<<x<<":"<<j<<"\n";
+			visited[x][j] = true;
+			dfs(x+1, j, cnt+1);
+			visited[x][j] = false;
 		}
-	}
-		
-
+	//}
 }
 
 int main()
@@ -52,10 +56,10 @@ int main()
         io;
         cin>>n;
 		for(int i=0;i<n;i++){
-			for(int j=0;j<n;j++){
-        		dfs(i, j, 1);
+			//for(int j=0;j<n;j++){
+        		dfs(0, i, 1);
 				memset(visited, 0, sizeof(visited));
-			}
+			//}
 		}
 		cout<<ans<<"\n";
 
