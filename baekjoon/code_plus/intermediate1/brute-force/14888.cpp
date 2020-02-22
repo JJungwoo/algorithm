@@ -11,14 +11,14 @@ dfs 호출할 때, 바로 뒤에 숫자를 호출해서 dfs는 가능하다.
 using namespace std;
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 
-int n, op_cnt, max_ans, min_ans = 987654321;
+int n, op_cnt, max_ans = -1e10, min_ans = 1e10;
 int numbers[11];
 int formula[4]; // +, -, *, /
 bool visited[11];
 
 int calc(int a, int b, int op)
 {
-	cout<<a<<" "<<b<<" , "<<op<<"\n";
+	//cout<<a<<" "<<b<<" , "<<op<<"\n";
 	switch(op){
 		case 0:
 			return a+b;
@@ -39,24 +39,21 @@ void dfs(int idx, int sum){
 	if(idx == n-1){
 		max_ans = max(max_ans, sum);
 		min_ans = min(min_ans, sum);
+        return;
 	}
 
 	for(int j=0;j<4;j++){
-		if(formula[j] != 0 && !visited[idx]){
-			visited[idx] = true;
-			formula[j] -= 1;
-			sum = calc(sum, numbers[idx+1], j);
-			dfs(idx+1, sum);
-			visited[idx] = false;
-			formula[j] += 1;
-		}
+        if(formula[j]){
+            formula[j]--;
+            dfs(idx+1, calc(sum, numbers[idx+1], j));
+            formula[j]++;
+        }
 	}
 }
 
 int main()
 {   
     io;
-	cout<<"TEST\n";
     cin>>n;
     for(int i=0;i<n;i++){
         cin>>numbers[i];
@@ -67,7 +64,7 @@ int main()
 		op_cnt += formula[i];
     }
 	
-	cout<<op_cnt<<"\n";
+	//cout<<op_cnt<<"\n";
     dfs(0, numbers[0]);
 
 	cout<<max_ans<<"\n";
