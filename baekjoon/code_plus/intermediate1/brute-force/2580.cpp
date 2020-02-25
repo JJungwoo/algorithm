@@ -9,9 +9,9 @@
 using namespace std;
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 
-int map[9][9], tmp_map[9][9], ans_cnt;
+int map[9][9], tmp_map[9][9];
 int check_map[10];
-vector<pair<pair<int, int>, pair<int, int> > > vp;
+vector<pair<int, int> > vp;
 bool visited[81];
 
 bool check_square(int x, int y)
@@ -98,8 +98,7 @@ int main()
             tmp_map[i][j] = map[i][j];
             check_map[map[i][j]]--;
             if(map[i][j] == 0){
-                ans_cnt++;
-                vp.push_back(make_pair(make_pair(i, j), make_pair(0, 0)));
+                vp.push_back(make_pair(i, j));
             }
         }
     }
@@ -108,7 +107,6 @@ int main()
         int y = vp[i].first.second; 
         cout<<x<<", "<<y<<"\n";
     }
-    cout<<ans_cnt<<","<<vp.size()<<"\n";
     solve(0);
     cout<<"\n\n";
 
