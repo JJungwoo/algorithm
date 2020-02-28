@@ -3,11 +3,12 @@
 1초마다 모든 벽이 아래에 있는 행으로 한 칸씩 내려가고 가장 아래에 있어서 아래에 행이 없다면 벽이 사라지게 된다.
 1초에 인접한 한 칸 또는 대각선 방향으로 인접한 한 칸으로 이동하거나, 현재 위치에 서 있을 수 있다.
 빈칸만 이동 가능, 욱제가 1초동안 먼저 이동하고 벽이 이동한다.
+13퍼에서 틀리네... 왜 틀린거지..
 */
 
 #include <iostream>
 #include <algorithm>
-#include <cstring>
+#include <vector>
 #include <queue>
 using namespace std;
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
@@ -85,6 +86,8 @@ int main()
         }
     }
     solve();
+    //move_wall();
+    //print_map();
     cout<<ans<<"\n";
     return 0;
 }
