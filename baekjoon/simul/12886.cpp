@@ -1,5 +1,6 @@
 /*
 [BOJ] 12886. 돌 그룹
+https://rebas.kr/778
 */
 
 #include <iostream>
@@ -21,7 +22,7 @@ bool check_end()
 
 void active()
 {
-    
+
 }
 
 void solve(int cnt)

@@ -22,19 +22,20 @@ bool move_check(int x, int y)
 	for(int i=0;i<8;i++){
 		int mx = x, my = y;
 		while(1){
-			//cout<<"mx: "<<mx<<" my: "<<my<<"\n";
 			mx += dir[i][0];
 			my += dir[i][1];
 			if(mx < 0 || my < 0 || mx >= n || my >= n) break;
 			if(visited[mx][my]) return false;
+			//cout<<"mx: "<<mx<<" my: "<<my<<"\n";
 		}
 	}
 	return true;
 }
 
-void dfs(int x, int y, int cnt)
+void dfs(int x, int y)
 {
-	if(cnt == n+1){
+	if(x > n) return;
+	if(x == n){
 		ans++;
 		return;
 	}
@@ -45,7 +46,7 @@ void dfs(int x, int y, int cnt)
 			if(move_check(x, j) == false) continue;
 			//cout<<x<<":"<<j<<"\n";
 			visited[x][j] = true;
-			dfs(x+1, j, cnt+1);
+			dfs(x+1, j);
 			visited[x][j] = false;
 		}
 	//}
@@ -57,7 +58,8 @@ int main()
         cin>>n;
 		for(int i=0;i<n;i++){
 			//for(int j=0;j<n;j++){
-        		dfs(0, i, 1);
+				visited[0][i] = true;
+        		dfs(1, i);
 				memset(visited, 0, sizeof(visited));
 			//}
 		}
