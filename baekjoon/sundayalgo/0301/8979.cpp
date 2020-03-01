@@ -24,14 +24,14 @@ int main()
     io;
     cin>>n>>k;
     vector<country> vc(n);
-    for(int i=1;i<n;i++){
+    for(int i=0;i<n;i++){
         cin>>vc[i].num>>vc[i].g>>vc[i].s>>vc[i].c;
     }
 
     sort(vc.begin(), vc.end(), cmp);
 
     for(int i=0;i<n;i++){
-        cout<<vc[i].num<<"\n";
+        cout<<vc[i].num<<","<<vc[i].g<<","<<vc[i].s<<","<<vc[i].c<<"\n";
     }
     return 0;
 }
