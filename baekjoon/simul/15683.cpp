@@ -110,7 +110,7 @@ void solve(int cnt) {
 	int size = cameras.size();
 	for (int i = 0; i < size; i++) {
 		int x = cameras[i].x, y = cameras[i].y;
-		cout << x << "," << y << "\n";
+		//cout << x << "," << y << "\n";
 		switch (cameras[i].s) {
 		case 1:
 			for (int z = 0; z < 4; z++) {

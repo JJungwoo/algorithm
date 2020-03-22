@@ -1,7 +1,74 @@
 /*
 [BOJ] 16637. 괄호 추가하기
 */
+#include <iostream>
+#include <algorithm>
+#include <string>
+#include <vector>
+#include <cmath>
+using namespace std;
+#define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 
+int n, ans;
+string input;
+vector<int> numbers;
+vector<char> signs;
+
+inline int cal(int a, int b, char sign){
+    int ret = 0;
+    switch(sign){
+        case '+':
+        ret = a + b;
+        break;
+        case '-':
+        ret = a - b;
+        break;
+        case '*':
+        ret = a * b;
+        break;
+        case '/':
+        ret = a / b;
+        break;
+    }
+    return ret;
+}
+
+void dfs(int cnt, int num1, int num2){
+    if(cnt == numbers.size()){
+        
+        return;
+    }
+}
+
+void solve(){
+    int size = numbers.size();
+    if(size = 1){
+        cout<<numbers[0]<<"\n";
+    }else if(size == 2){
+        cout<<cal(numbers[0], numbers[1], signs[0]);
+    }else {
+        dfs(0, numbers[0], numbers[0]);
+        cout<<ans<<"\n";
+    }
+}
+
+int main()
+{
+    io;
+    cin>>n;
+    cin>>input;
+    for(int i=0;i<input.size();i++){
+        if((i+1%2) == 0){
+            numbers.push_back(input[i]-'0');
+        } else {
+            signs.push_back(input[i]);
+        }   
+    }
+    solve();
+    return 0;
+}
+
+/*
 #include <iostream>
 #include <algorithm>
 #include <string>
@@ -74,3 +141,4 @@ int main()
     solve();
     return 0;
 }
+*/
