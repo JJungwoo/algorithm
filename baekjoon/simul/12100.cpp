@@ -11,7 +11,7 @@
 64 64 128 0 0 0 0 0 0 0
 128 32 2 4 0 0 0 0 0 0
 0 0 128 0 0 0 0 0 0 0
-´ä : 1024
+ï¿½ï¿½ : 1024
 output: 512
 [#2]
 7
@@ -33,7 +33,7 @@ output: 512
 0 0 0 0 0 8 16
 0 0 0 0 8 16 2
 
-¿¹¸¦ ¹ØÀ¸·Î ³»¸±°æ¿ì
+ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 0 0 0 0 0 0 0
 0 0 0 0 0 0 0
@@ -43,7 +43,7 @@ output: 512
 0 0 0 0 0 16 32
 0 0 0 0 8 16 2
 
-°¡ Á¤´äÀÌÁö¸¸
+ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 0 0 0 0 0 0 0
 0 0 0 0 0 0 0
@@ -53,7 +53,7 @@ output: 512
 0 0 0 0 0 4 32
 0 0 0 0 8 32 2
 
-³» ÄÚµå
+ï¿½ï¿½ ï¿½Úµï¿½
 
 7
 0 0 0 0 0 0 0
@@ -133,7 +133,7 @@ void move_map() {
 		bool change[21][21];
 		memset(change, 0, sizeof(change));
 		int dir = dir_v[i];
-		switch (dir) {		// »ó, ÇÏ, ÁÂ, ¿ì
+		switch (dir) {		// ï¿½ï¿½, ï¿½ï¿½, ï¿½ï¿½, ï¿½ï¿½
 		case 0:
 			for (int x = 1; x < n; x++) {
 				for (int y = 0; y < n; y++) {
@@ -177,7 +177,7 @@ void move_map() {
 				}
 			}
 			break;
-		case 2:		// ÁÂ
+		case 2:		// ï¿½ï¿½
 			for (int x = 0; x < n; x++) {
 				for (int y = 1; y < n; y++) {
 					bool check = 0;
@@ -202,7 +202,7 @@ void move_map() {
 				}
 			}
 			break;
-		case 3:		// ¿ì
+		case 3:		// ï¿½ï¿½
 			for (int x = 0; x < n; x++) {
 				for (int y = n - 2; y >= 0; y--) {
 					bool check = 0;
@@ -279,7 +279,7 @@ int dir[4][2] = { {-1,0},{1,0},{0,-1},{0,1} };
 vector<int> moving;
 
 inline bool gocheck(int x, int y) {
-	if (x < 0 || y < 0 || x > n || y > n) return false;
+	if (x < 0 || y < 0 || x >= n || y >= n) return false;
 	return true;
 }
 
@@ -323,22 +323,22 @@ void move(int x, int y, int d) {
 
 void move_map(int mdir) {
 	switch (mdir) {
-	case 0:	// »ó
+	case 0:	// ï¿½ï¿½
 		for (int i = 0; i < n; i++) {
 			move(n - 1, i, mdir);
 		}
 		break;
-	case 1:	// ÇÏ
+	case 1:	// ï¿½ï¿½
 		for (int i = 0; i < n; i++) {
 			move(0, i, mdir);
 		}
 		break;
-	case 2:	// ÁÂ
+	case 2:	// ï¿½ï¿½
 		for (int i = 0; i < n; i++) {
 			move(i, n - 1, mdir);
 		}
 		break;
-	case 3:	// ¿ì
+	case 3:	// ï¿½ï¿½
 		for (int i = 0; i < n; i++) {
 			move(i, 0, mdir);
 		}
@@ -352,7 +352,7 @@ void solve(int cur, int cnt) {
 		copy_map(tmp_map);
 		print_map(map);
 		
-		int size = moving.size();	// 0(»ó), 1(ÇÏ), 2(ÁÂ), 3(¿ì)
+		int size = moving.size();	// 0(ï¿½ï¿½), 1(ï¿½ï¿½), 2(ï¿½ï¿½), 3(ï¿½ï¿½)
 		
 		for (int i = 0; i < size; i++) {
 			cout << size << ","<<i<<"\n";
