@@ -11,7 +11,7 @@
 64 64 128 0 0 0 0 0 0 0
 128 32 2 4 0 0 0 0 0 0
 0 0 128 0 0 0 0 0 0 0
-О©╫О©╫ : 1024
+╢Д : 1024
 output: 512
 [#2]
 7
@@ -24,80 +24,155 @@ output: 512
 2 2 2 2 2 2 0
 32
 
-7
-0 0 0 0 0 0 0
-0 0 0 0 0 0 0
-0 0 0 0 0 0 0
-0 0 0 0 0 4 8
-0 0 0 0 0 8 16
-0 0 0 0 0 8 16
-0 0 0 0 8 16 2
-
-О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫
-
-0 0 0 0 0 0 0
-0 0 0 0 0 0 0
-0 0 0 0 0 0 0
-0 0 0 0 0 0 0
-0 0 0 0 0 4 8
-0 0 0 0 0 16 32
-0 0 0 0 8 16 2
-
-О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
-
-0 0 0 0 0 0 0
-0 0 0 0 0 0 0
-0 0 0 0 0 0 0
-0 0 0 0 0 0 0
-0 0 0 0 0 0 8
-0 0 0 0 0 4 32
-0 0 0 0 8 32 2
-
-О©╫О©╫ О©╫з╣О©╫
-
-7
-0 0 0 0 0 0 0
-0 0 0 0 0 0 0
-0 0 0 0 0 0 0
-0 0 0 0 0 4 8
-0 0 0 0 0 8 16
-0 0 0 0 0 8 16
-0 0 0 0 8 16 2
-
-0 0 0 0 0 0 0
-0 0 0 0 8 4 8
-0 0 0 0 0 16 32
-0 0 0 0 0 16 2
-0 0 0 0 0 0 0
-0 0 0 0 0 0 0
-0 0 0 0 0 0 0
-
-0 0 0 0 0 0 0
-0 0 0 0 0 0 0
-0 0 0 0 0 0 0
-0 0 0 0 0 0 0
-0 0 0 0 0 4 8
-0 0 0 0 0 16 32
-0 0 0 0 8 16 2
-
-0 0 0 0 0 0 0
-0 0 0 0 0 0 0
-0 0 0 0 0 0 0
-8 0 0 0 0 0 4
-16 0 0 0 0 0 8
-16 0 0 0 0 0 8
-16 0 0 0 0 8 2
-
-0 0 0 0 0 0 0
-0 0 0 0 0 0 0
-0 0 0 0 0 0 0
-0 0 0 0 0 4 8
-0 0 0 0 0 8 16
-0 0 0 0 0 8 16
-0 0 0 0 8 16 2
-32
-
 */
+#include <iostream>
+#include <vector>
+#include <cstring>
+#define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+using namespace std;
+
+int n, ans;
+int map[20][20];
+vector<int> moving;
+int dir[4][2] = { {-1,0},{1,0},{0,-1},{0,1} };
+bool change[20][20];
+
+struct G2048 {
+	void copy_map(int tmp[20][20]) {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				tmp[i][j] = map[i][j];
+			}
+		}
+	}
+
+	void print_map(int tmp[20][20]) {
+		cout << "print_map\n";
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				cout << tmp[i][j] << " ";
+			}
+			cout << "\n";
+		}
+	}
+
+	int find_max(int tmp[20][20]) {
+		int max = 0;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if (max < tmp[i][j]) {
+					max = tmp[i][j];
+				}
+			}
+		}
+		return max;
+	}
+
+	void move(int x, int y, int d, int tmp[20][20]) {
+		int mx = x, my = y;
+		if (tmp[mx][my] == 0) return;
+		while (1) {
+			int gox = mx + dir[d][0], goy = my + dir[d][1];
+			if (gox < 0 || goy < 0 || gox >= n || goy >= n) break;
+			else if (tmp[gox][goy] != 0) {
+				if (tmp[mx][my] == tmp[gox][goy] && change[gox][goy] == false) {
+					tmp[gox][goy] += tmp[mx][my];
+					tmp[mx][my] = 0;
+					change[gox][goy] = true;
+					break;
+				}
+				else break;
+			}
+			else {
+				swap(tmp[gox][goy], tmp[mx][my]);
+			}
+
+			//print_map(tmp);
+			mx += dir[d][0], my += dir[d][1];
+		}
+	}
+
+	void move_board(int tmp[20][20]) {
+		int size = moving.size();
+		for (int d = 0; d < size; d++) {
+			memset(change, 0, sizeof(change));
+			switch (moving[d]) {
+			case 0:	// ╩С, го, аб, ©Л
+				for (int i = 0; i < n; i++) {
+					for (int j = 0; j < n; j++) {
+						move(i, j, moving[d], tmp);
+					}
+				}
+				break;
+			case 1:
+				for (int i = n-1; i >= 0; i--) {
+					for (int j = 0; j < n; j++) {
+						move(i, j, moving[d], tmp);
+					}
+				}
+				break;
+			case 2:
+				for (int i = 0; i < n; i++) {
+					for (int j = 0; j < n; j++) {
+						move(i, j, moving[d], tmp);
+					}
+				}
+				break;
+			case 3:
+				for (int i = 0; i < n; i++) {
+					for (int j = n - 1; j >= 0; j--) {
+						move(i, j, moving[d], tmp);
+					}
+				}
+				break;
+			}
+		}
+		//print_map(tmp);
+	}
+};
+G2048 game;
+
+void solve(int cnt) {
+	if (cnt == 5) {
+		int tmp_map[20][20];
+		game.copy_map(tmp_map);
+		game.move_board(tmp_map);
+		int find_ans = game.find_max(tmp_map);
+		//game.print_map(tmp_map);
+		if (ans < find_ans) {
+			ans = find_ans;
+		}
+		return;
+	}
+
+	for (int i = 0; i < 4; i++) {
+		moving.push_back(i);
+		solve(cnt + 1);
+		moving.pop_back();
+	}
+}
+
+int main()
+{
+	io;
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			cin >> map[i][j];
+		}
+	}
+	solve(0);
+	cout << ans << "\n";
+	return 0;
+}
+
+
+
+
+
+
+
+
 /*
 #include <iostream>
 #include <vector>
@@ -133,7 +208,7 @@ void move_map() {
 		bool change[21][21];
 		memset(change, 0, sizeof(change));
 		int dir = dir_v[i];
-		switch (dir) {		// О©╫О©╫, О©╫О©╫, О©╫О©╫, О©╫О©╫
+		switch (dir) {		// ╩С, го, аб, ©Л
 		case 0:
 			for (int x = 1; x < n; x++) {
 				for (int y = 0; y < n; y++) {
@@ -177,7 +252,7 @@ void move_map() {
 				}
 			}
 			break;
-		case 2:		// О©╫О©╫
+		case 2:		// аб
 			for (int x = 0; x < n; x++) {
 				for (int y = 1; y < n; y++) {
 					bool check = 0;
@@ -202,7 +277,7 @@ void move_map() {
 				}
 			}
 			break;
-		case 3:		// О©╫О©╫
+		case 3:		// ©Л
 			for (int x = 0; x < n; x++) {
 				for (int y = n - 2; y >= 0; y--) {
 					bool check = 0;
@@ -267,7 +342,7 @@ int main()
 }
 */
 
-
+/*
 #include <iostream>
 #include <vector>
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
@@ -301,46 +376,52 @@ void print_map(int tmp_map[20][20]) {
 	}
 }
 
-void move(int x, int y, int d) {
-	int mx = x + dir[d][0], my = y + dir[d][1];
-	while (gocheck(mx,my)) {
-		if (map[mx][my] != 0) {
-			if (map[mx - dir[d][0]][my - dir[d][1]] == map[mx][my]) {
-				map[mx][my] += map[mx - dir[d][0]][my - dir[d][1]];
-				map[my - dir[d][0]][my - dir[d][1]] = 0;
-				break;
+void move(int x, int y, int d, int tmap[20][20]) {
+	int mx = x, my = y;
+	while (1) {
+		//cout<<tmap[mx][my]<<":"<< "mx:" << mx << ",my:" << my << "\n";
+
+		int gox = mx + dir[d][0], goy = my + dir[d][1];
+		cout << gox << "," << goy << " : " << mx << "," << my << "\n";
+		if (gocheck(gox, goy)) {
+			if (tmap[mx][my] == tmap[gox][goy] && tmap[gox][goy] != 0) {
+				tmap[gox][goy] += tmap[mx][my];
+				tmap[mx][my] = 0;
+				cout <<"d:"<<d<<","<< tmap[gox][goy] << ":" << "x:" << mx << ",y:" << my << "\n";
 			}
-			else {
-				break;
+			else if(tmap[gox][goy] == 0){
+				swap(tmap[mx][my], tmap[gox][goy]);
 			}
+
+			mx += dir[d][0];
+			my += dir[d][1];
 		}
-		mx += dir[d][0];
-		my += dir[d][0];
+		else break;
+		print_map(tmap);
+		
 	}
-	mx -= dir[d][0];
-	my -= dir[d][1];
 }
 
-void move_map(int mdir) {
+void move_map(int mdir, int tmap[20][20]) {
 	switch (mdir) {
-	case 0:	// О©╫О©╫
+	case 0:	// ╩С
 		for (int i = 0; i < n; i++) {
-			move(n - 1, i, mdir);
+			move(0, i, mdir, tmap);
 		}
 		break;
-	case 1:	// О©╫О©╫
+	case 1:	// го
 		for (int i = 0; i < n; i++) {
-			move(0, i, mdir);
+			move(n - 1, i, mdir, tmap);
 		}
 		break;
-	case 2:	// О©╫О©╫
+	case 2:	// аб
 		for (int i = 0; i < n; i++) {
-			move(i, n - 1, mdir);
+			move(i, 0, mdir, tmap);
 		}
 		break;
-	case 3:	// О©╫О©╫
+	case 3:	// ©Л
 		for (int i = 0; i < n; i++) {
-			move(i, 0, mdir);
+			move(i, n - 1, mdir, tmap);
 		}
 		break;
 	}
@@ -350,14 +431,13 @@ void solve(int cur, int cnt) {
 	if (cnt == 5) {
 		int tmp_map[20][20];
 		copy_map(tmp_map);
-		print_map(map);
 		
-		int size = moving.size();	// 0(О©╫О©╫), 1(О©╫О©╫), 2(О©╫О©╫), 3(О©╫О©╫)
+		int size = moving.size();	// 0(╩С), 1(го), 2(аб), 3(©Л)
 		
 		for (int i = 0; i < size; i++) {
 			cout << size << ","<<i<<"\n";
 			for (int j = 0; j < 4; j++) {
-				move_map(j);
+				move_map(j, tmp_map);
 			}
 		}
 		//print_map(tmp_map);
@@ -369,6 +449,7 @@ void solve(int cur, int cnt) {
 				}
 			}
 		}
+		print_map(tmp_map);
 		if (ans < max) {
 			ans = max;
 		}
@@ -395,3 +476,4 @@ int main()
 	cout << ans << "\n";
 	return 0;
 }
+*/
