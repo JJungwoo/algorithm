@@ -9,7 +9,7 @@ Robot X crashes into the wall: X번 로봇이 벽에 충돌하는 경우이다.
 Robot X crashes into robot Y: X번 로봇이 움직이다가 Y번 로봇에 충돌하는 경우이다.
 모든 로봇은 순차적으로 움직인다.
 */
-/*
+
 #include <iostream>
 #include <vector>
 
@@ -34,20 +34,37 @@ void solve() {
 		int target = clist[i].t;
 		switch (clist[i].cmd) {
 		case 'L':	// 왼쪽 90, -1
-			int tmp = rlist[target].d;
-			for (int j = 0; j < clist[i].l; j++)
-				tmp = tmp - 1 == 0 ? 3 : tmp - 1;
+			rlist[target].d = (rlist[target].d + clist[i].l + 2) % 4;
 			break;
 		case 'R':	// 오른쪽 90, +1
 			rlist[target].d = (rlist[target].d + clist[i].l) % 4;
 			break;
 		case 'F':	// 앞으로 한칸
 			for (int j = 0; j < clist[i].l; j++) {
-				rlist[target].x += dir[];
+				int x = rlist[target].x, y = rlist[target].y;
+				int d = rlist[target].d;
+				if(map[x + dir[d][0]][y + dir[d][1]].num != 0){
+					cout<<"Robot "<<target<<" crashes into robot "<<map[x + dir[d][0]][y + dir[d][1]].num<<"\n";
+					return;
+				}else if(x + dir[d][0] < 0 || y + dir[d][1] < 0 || 
+						x + dir[d][0] >= b || y + dir[d][1] >= a)
+				{	
+					cout<<x + dir[d][0]<<","<<y + dir[d][1]<<"\n";
+					cout<<"Robot "<<target<<" crashes into the wall\n";
+					return;
+				}else{
+					map[x + dir[d][0]][y + dir[d][1]].num = map[x][y].num;
+					map[x + dir[d][0]][y + dir[d][1]].d = map[x][y].d;
+					rlist[target].x += dir[d][0];
+					rlist[target].y += dir[d][1];
+					map[x][y].num = 0;
+					map[x][y].d = 0;
+				}
 			}
 			break;
 		}
 	}
+	cout<<"OK\n";
 }
 int main()
 {
@@ -58,10 +75,11 @@ int main()
 		int x, y;
 		char d;
 		cin >> x >> y >> d;
+		x--, y--;
 		int td = (d == 'N' ? 0 : d == 'E' ? 1 : d == 'S' ? 2 : d == 'W' ? 3 : -1);
-		rlist.push_back({ x,y,td,i });
+		rlist.push_back({ x,y,td,i+1 });
 		map[x][y].d = d;
-		map[x][y].num = i;
+		map[x][y].num = i+1;
 	}
 	for (int i = 0; i < m; i++) {
 		// 타겟, 종류, 반복 횟수
@@ -74,4 +92,4 @@ int main()
 	solve();
 	return 0;
 }
-*/
+
