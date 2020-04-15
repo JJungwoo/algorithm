@@ -1,109 +1,96 @@
 /*
-[boj] 17135. ìºìŠ¬ ë””íœìŠ¤
-ê°ê°ì˜ í„´ë§ˆë‹¤ ê¶ìˆ˜ëŠ” í•˜ë‚˜ì˜ ì ì„ ê³µê²©í•˜ê³ , ëª¨ë“  ê¶ìˆ˜ëŠ” ë™ì‹œì— ê³µê²©í•œë‹¤
-ê°™ì€ ì ì´ ì—¬ëŸ¬ ê¶ìˆ˜ì—ê²Œ ê³µê²©ë‹¹í• ìˆ˜ ìˆê³  ê¶ìˆ˜ê°€ ê³µê²©í•˜ëŠ” ì ì€ ê±°ë¦¬ê°€ Dì´í•˜ì¸ ì ì¤‘ì—
-ê°€ì¥ ê°€ê¹Œìš´ ì ì´ê³ , ê·¸ëŸ¬í•œ ì ì´ ì—¬ëŸ¿ì¼ ê²½ìš° ê°€ì¥ ì™¼ìª½ì— ì ì„ ê³µê²©í•œë‹¤.
-ê¶ìˆ˜ì˜ ê³µê²©ì´ ëë‚˜ê³  ì ì´ ì´ë™í•œë‹¤.
-d = |n - i| + |k - j|
-
-í•´ê²° ë°©ë²•
-1. dfsë¡œ ê²½ë¡œ ì°¾ì•„ì„œ ê³µê²© 
-2. 2ì¤‘ í¬ë¬¸ìœ¼ë¡œ í•˜ë‚˜ì”© ë‹¤ ê±°ë¦¬ ì²´í¬í•´ì„œ ê³µê²©
-3. ê³µê²© ëŒ€ìƒë“¤ ë¦¬ìŠ¤íŠ¸ë§Œë“¤ì–´ì„œ ì •ë ¬í•œë‹¤ìŒ ì‘ì€ ê°’ë¶€í„° ê³µê²©
-
+[boj] 17135. Ä³½½ µğÆæ½º
+°¢°¢ÀÇ ÅÏ¸¶´Ù ±Ã¼ö´Â ÇÏ³ªÀÇ ÀûÀ» °ø°İÇÏ°í, ¸ğµç ±Ã¼ö´Â µ¿½Ã¿¡ °ø°İÇÑ´Ù
+°°Àº ÀûÀÌ ¿©·¯ ±Ã¼ö¿¡°Ô °ø°İ´çÇÒ¼ö ÀÖ°í ±Ã¼ö°¡ °ø°İÇÏ´Â ÀûÀº °Å¸®°¡ DÀÌÇÏÀÎ ÀûÁß¿¡
+°¡Àå °¡±î¿î ÀûÀÌ°í, ±×·¯ÇÑ ÀûÀÌ ¿©·µÀÏ °æ¿ì °¡Àå ¿ŞÂÊ¿¡ ÀûÀ» °ø°İÇÑ´Ù.
+±Ã¼öÀÇ °ø°İÀÌ ³¡³ª°í ÀûÀÌ ÀÌµ¿ÇÑ´Ù.
 */
+
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include <cmath>
-#include <queue>
-using namespace std;
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
-int n,m,d,ans;
-int map[16][16], tmp_map[16][16];
-vector<int> hunters;
-inline int cal_dis(int x1, int y1, int x2, int y2){
-	return abs(x1-x2) + abs(y1-y2);
+using namespace std;
+#define distance(sx, sy, dx, dy) (abs(sx - dx) + abs(sy - dy))
+int n, m, d, ans;
+int map[15][15], copy_map[15][15];
+bool visited[15];
+struct monster {
+	int x, y, d;
+};
+bool compare(monster a, monster b) {
+	if(a.d == b.d) return a.y < b.y;
+	else return a.d < b.d;
 }
-void copy_map(){
-	for(int i=0;i<n;i++){
-		for(int j=0;j<m;j++){
-			tmp_map[i][j] = map[i][j];
+vector<int> hunter;
+void copy() {
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			copy_map[i][j] = map[i][j];
 		}
 	}
 }
-void print_map(){
-	cout<<"print_map\n";
-	for(int i=0;i<n;i++){
-		for(int j=0;j<m;j++){
-			cout<<tmp_map[i][j]<<" ";
-		}
-		cout<<"\n";
-	}
-}
-void solve(int cur, int cnt){
-	if(cnt == 3){
-		//cout<<"debug:"<<hunters[0]<<","<<hunters[1]<<","<<hunters[2]<<"\n";
-		int sum = 0;
-		copy_map();
-		for(int i=n;i>0;i--){
-			vector<pair<int, int> > kill;
-			for(int j=0;j<3;j++){
-				int tj = hunters[j], value = 16*16;
-				int dx = 0, dy = 16;
-				for(int z=1;z<=d;z++){
-					for(int y=0;y<m;y++){
-						if(i-z < 0) continue;
-						int tmp = cal_dis(i, tj, i-z, y);
-						if(tmp <= d && tmp_map[i-z][y] == 1){
-							//cout<<i<<","<<tj<<" <> "<<i-z<<","<<y<<"="<<tmp<<"\n";
-							if(tmp <= value){
-								if(dy > y){
-									value = tmp;
-									dx = i-z, dy = y;
-								}
-
-							}
+void solve(int cnt) {
+	if (cnt == 3) {
+		int kill = 0;
+		int size = hunter.size();
+		copy();
+		for (int i = n; i >= 1; i--) {	// ¾Æ·¡¿¡¼­ À§·Î ¿Ã¶ó°¨
+			vector<monster> monters[3];
+			for (int j = 0; j < 3; j++) {
+				int sx = i, sy = hunter[j];
+				for (int x = 0; x < i; x++) {
+					for (int y = 0; y < m; y++) {
+						int dis = distance(sx, sy, x, y);
+						if (copy_map[x][y] == 1 && dis <= d) {
+							monters[j].push_back({ x,y,dis });
 						}
 					}
 				}
-				if(value != 16*16){
-					kill.push_back(make_pair(dx, dy));
+				if (monters[j].size() > 0) {
+					sort(monters[j].begin(), monters[j].end(), compare);
 				}
 			}
-			int size = kill.size();
-			for(int j=0;j<size;j++){
-				int x = kill[j].first, y = kill[j].second;
-				if(tmp_map[x][y] != 0) sum++;
-				tmp_map[x][y] = 0;
+			for (int j = 0; j < 3; j++) {
+				if (monters[j].size() > 0) {
+					int tx = monters[j][0].x, ty = monters[j][0].y;
+					if (copy_map[tx][ty] != 0) {
+						copy_map[tx][ty] = 0;
+						kill++;
+					}
+				}
 			}
-			//print_map();
 		}
-		if(ans < sum){
-			//cout<<"sum:"<<sum<<"\n";
-			ans = sum;
+		if (ans < kill) {
+			ans = kill;
 		}
 		return;
 	}
 
-	for(int i=cur;i<m;i++){
-		hunters.push_back(i);
-		solve(i + 1, cnt + 1);
-		hunters.pop_back();
+	for (int i = 0; i < m; i++) {
+		if (visited[i]) continue;
+		visited[i] = true;
+		hunter.push_back(i);
+		solve(cnt + 1);
+		hunter.pop_back();
+		visited[i] = false;
 	}
 }
 int main()
 {
 	io;
-	cin>>n>>m>>d;
-	for(int i=0;i<n;i++){
-		for(int j=0;j<m;j++){
-			cin>>map[i][j];
+	cin >> n >> m >> d;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			cin >> map[i][j];
 		}
 	}
-	solve(0, 0);
-	cout<<ans<<"\n";
+	solve(0);
+	cout << ans << "\n";
 	return 0;
 }
+
 
 /*
 #include <iostream>
@@ -111,20 +98,11 @@ int main()
 #include <algorithm>
 #include <queue>
 using namespace std;
-#define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 
 int n, m, d, ans;
 int map[16][16];
 bool visited[16];
 vector<int> archer;
-
-struct castle{
-    int x, y, z;
-    bool operator < (const castle &t) const {
-        if(z == t.z) return y > t.y;
-        else return z > t.z;
-    }
-};
 
 void move_monster() {
 	for (int i = n-1; i >= 0; i--) {
@@ -163,6 +141,7 @@ void dfs(int cnt) {
 		ans = max(ans, cnt);
 		return;
 	}
+
 	for (int i = 0; i < m; i++) {
 		if (visited[i]) continue;
 		visited[i] = true;
@@ -181,8 +160,10 @@ int main()
 			cin >> map[i][j];
 		}
 	}
+
 	dfs(0);
 	cout << ans << "\n";
+
 	return 0;
 }
 */
