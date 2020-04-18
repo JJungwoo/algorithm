@@ -1,11 +1,100 @@
-/*
-[boj] 17244. ¾Æ¸Â´Ù¿ì»ê
-sort¸¦ »ç¿ëÇØ¼­ ¹°°ÇÀÇ À§Ä¡Áß °¡Àå °¡±î¿î°Í ¸ÕÀú Ã£´Â ¹æ½ÄÀ» »ç¿ëÇÏ¿´´Âµ¥, ¹®Á¦´Â °Å¸®¸¦ ±¸ÇÒ ¶§ 
-³»À§Ä¡¿Í ¹°°Ç»çÀÌ¿¡ º®À» »ı°¢¸øÇß´Ù... ÀÌ·±;
-¹°°Ç °¹¼ö´Â ÃÖ´ë 5°³ÀÌ´Ï±î ±×³É 5°³ Ã£¾Æ°¡´Â ¼ø¼­¸¸ µ¹¸®¸é µÇ´Â°ÍÀÌ¿´À½À»..
+ï»¿/*
+[boj] 17244. ì•„ë§ë‹¤ìš°ì‚°
+sortë¥¼ ì‚¬ìš©í•´ì„œ ë¬¼ê±´ì˜ ìœ„ì¹˜ì¤‘ ê°€ì¥ ê°€ê¹Œìš´ê²ƒ ë¨¼ì € ì°¾ëŠ” ë°©ì‹ì„ ì‚¬ìš©í•˜ì˜€ëŠ”ë°, ë¬¸ì œëŠ” ê±°ë¦¬ë¥¼ êµ¬í•  ë•Œ 
+ë‚´ìœ„ì¹˜ì™€ ë¬¼ê±´ì‚¬ì´ì— ë²½ì„ ìƒê°ëª»í–ˆë‹¤... ì´ëŸ°;
+ë¬¼ê±´ ê°¯ìˆ˜ëŠ” ìµœëŒ€ 5ê°œì´ë‹ˆê¹Œ ê·¸ëƒ¥ 5ê°œ ì°¾ì•„ê°€ëŠ” ìˆœì„œë§Œ ëŒë¦¬ë©´ ë˜ëŠ”ê²ƒì´ì˜€ìŒì„..
+í•´ê²°!
 */
+#include <iostream>
+#include <queue>
+#include <vector>
+#include <cstring>
+using namespace std;
+#define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+int n, m, xcnt, ans = 987654321;
+int dir[4][2] = { {-1,0},{1,0},{0,-1},{0,1} };
+struct pos {
+	int x, y, cnt;
+};
+char map[51][51];
+bool visitedpoint[5];
+vector<pos> vp, tmp;
+pos my, epoint;
+int bfs(int sx, int sy, int dx, int dy) {
+	bool visited[51][51];
+	int min = 987654321;
+	queue<pos> q;
+	q.push({ sx,sy,0 });
+	memset(visited, 0, sizeof(visited));
+	while (!q.empty()) {
+		int x = q.front().x, y = q.front().y, cnt = q.front().cnt;
+		q.pop();
+		if (x == dx && y == dy) {
+			if (min > cnt) {
+				min = cnt;
+			}
+		}
+		for (int i = 0; i < 4; i++) {
+			int mx = x + dir[i][0], my = y + dir[i][1];
+			if (mx < 0 || my < 0 || mx >= m || my >= n) continue;
+			if (visited[mx][my])continue;
+			if (map[mx][my] == '#') continue;
+			visited[mx][my] = true;
+			q.push({ mx,my,cnt + 1 });
+		}
+	}
+	return min;
+}
+void solve(int cnt) {
+	if (cnt == xcnt) {
+		pos tmy = my;
+		int sum = 0, size = tmp.size();
+		for (int i = 0; i < size; i++) {
+			sum += bfs(tmy.x, tmy.y, tmp[i].x, tmp[i].y);
+			//cout << sum << ":" << tmp[i].x << "," << tmp[i].y << "\n";
+			tmy.x = tmp[i].x, tmy.y = tmp[i].y;
+		}
+		sum += bfs(tmy.x, tmy.y, epoint.x, epoint.y);
+		if (ans > sum) {
+			ans = sum;
+		}
+		return;
+	}
+	int size = vp.size();
+	for (int i = 0; i < size; i++) {
+		if (visitedpoint[i]) continue;
+		visitedpoint[i] = true;
+		tmp.push_back(vp[i]);
+		solve(cnt + 1);
+		tmp.pop_back();
+		visitedpoint[i] = false;
+	}
+}
+int main()
+{
+	io;
+	cin >> n >> m;
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++) {
+			cin >> map[i][j];
+			if (map[i][j] == 'X') {
+				vp.push_back({ i, j, 0 });
+				xcnt++;
+			}
+			else if (map[i][j] == 'S') {
+				my.x = i, my.y = j;
+			}
+			else if (map[i][j] == 'E') {
+				epoint.x = i, epoint.y = j;
+			}
+		}
+	}
+	solve(0);
+	cout << ans << "\n";
+	return 0;
+}
 
-
+/*
 #include <iostream>
 #include <queue>
 #include <vector>
@@ -98,7 +187,7 @@ int main()
 	cout << minans << "\n";
 	return 0;
 }
-
+*/
 
 /*
 #include <iostream>
