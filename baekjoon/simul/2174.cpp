@@ -1,71 +1,133 @@
-/*
-[boj] 2174. ·Îº¿ ½Ã¹Ä·¹ÀÌ¼Ç
-L: ·Îº¿ÀÌ ÇâÇÏ°í ÀÖ´Â ¹æÇâÀ» ±âÁØÀ¸·Î ¿ŞÂÊÀ¸·Î 90µµ È¸ÀüÇÑ´Ù.
-R: ·Îº¿ÀÌ ÇâÇÏ°í ÀÖ´Â ¹æÇâÀ» ±âÁØÀ¸·Î ¿À¸¥ÂÊÀ¸·Î 90µµ È¸ÀüÇÑ´Ù.
-F: ·Îº¿ÀÌ ÇâÇÏ°í ÀÖ´Â ¹æÇâÀ» ±âÁØÀ¸·Î ¾ÕÀ¸·Î ÇÑ Ä­ ¿òÁ÷ÀÎ´Ù.
+ï»¿/*
+[boj] 2174. ë¡œë´‡ ì‹œë®¬ë ˆì´ì…˜
+L: ë¡œë´‡ì´ í–¥í•˜ê³  ìˆëŠ” ë°©í–¥ì„ ê¸°ì¤€ìœ¼ë¡œ ì™¼ìª½ìœ¼ë¡œ 90ë„ íšŒì „í•œë‹¤.
+R: ë¡œë´‡ì´ í–¥í•˜ê³  ìˆëŠ” ë°©í–¥ì„ ê¸°ì¤€ìœ¼ë¡œ ì˜¤ë¥¸ìª½ìœ¼ë¡œ 90ë„ íšŒì „í•œë‹¤.
+F: ë¡œë´‡ì´ í–¥í•˜ê³  ìˆëŠ” ë°©í–¥ì„ ê¸°ì¤€ìœ¼ë¡œ ì•ìœ¼ë¡œ í•œ ì¹¸ ì›€ì§ì¸ë‹¤.
 
-Robot X crashes into the wall: X¹ø ·Îº¿ÀÌ º®¿¡ Ãæµ¹ÇÏ´Â °æ¿ìÀÌ´Ù. 
-Áï, ÁÖ¾îÁø ¶¥ÀÇ ¹ÛÀ¸·Î ¹ş¾î³ª´Â °æ¿ì°¡ µÈ´Ù.
-Robot X crashes into robot Y: X¹ø ·Îº¿ÀÌ ¿òÁ÷ÀÌ´Ù°¡ Y¹ø ·Îº¿¿¡ Ãæµ¹ÇÏ´Â °æ¿ìÀÌ´Ù.
-¸ğµç ·Îº¿Àº ¼øÂ÷ÀûÀ¸·Î ¿òÁ÷ÀÎ´Ù.
+Robot X crashes into the wall: Xë²ˆ ë¡œë´‡ì´ ë²½ì— ì¶©ëŒí•˜ëŠ” ê²½ìš°ì´ë‹¤. 
+ì¦‰, ì£¼ì–´ì§„ ë•…ì˜ ë°–ìœ¼ë¡œ ë²—ì–´ë‚˜ëŠ” ê²½ìš°ê°€ ëœë‹¤.
+Robot X crashes into robot Y: Xë²ˆ ë¡œë´‡ì´ ì›€ì§ì´ë‹¤ê°€ Yë²ˆ ë¡œë´‡ì— ì¶©ëŒí•˜ëŠ” ê²½ìš°ì´ë‹¤.
+ëª¨ë“  ë¡œë´‡ì€ ìˆœì°¨ì ìœ¼ë¡œ ì›€ì§ì¸ë‹¤.
 */
-
 #include <iostream>
 #include <vector>
 
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 using namespace std;
 int a, b, n, m;
-int dir[4][2] = { {-1,0},{0,1}, {1,0},{0,-1} };	// ½Ã°è¹æÇâ +1, ¹İ½Ã°è¹æÇâ -1
-struct robot{
-	int x, y, d;
-	int num;
+int dir[4][2] = { {-1,0},{0,1},{1,0},{0,-1} };
+struct robot {
+	int num, d;
 };
-struct command {
-	int t, l;
-	char cmd;
+struct cmd {
+	int num, loop;
+	char kind;
 };
-vector<robot> rlist;
-vector<command> clist;	//cmd list
-robot map[100][100];
+robot map[101][101];
+pair<int, int> rbt[101];
+vector<cmd> v;
 void solve() {
-	int size = clist.size();
-	for (int i = 0; i < size; i++) {
-		int target = clist[i].t;
-		switch (clist[i].cmd) {
-		case 'L':	// ¿ŞÂÊ 90, -1
-			rlist[target].d = (rlist[target].d + clist[i].l + 2) % 4;
+	int cmd_size = v.size();
+	for (int i = 0; i < cmd_size; i++) {
+		int x = rbt[v[i].num].first, y = rbt[v[i].num].second;
+		switch (v[i].kind) {
+		case 'L':
+			for (int j = 0; j < v[i].loop % 4; j++) {
+				map[x][y].d--;
+				if (map[x][y].d < 0) map[x][y].d = 3;
+			}
 			break;
-		case 'R':	// ¿À¸¥ÂÊ 90, +1
-			rlist[target].d = (rlist[target].d + clist[i].l) % 4;
+		case 'R':
+			map[x][y].d = (map[x][y].d + v[i].loop) % 4;
 			break;
-		case 'F':	// ¾ÕÀ¸·Î ÇÑÄ­
-			for (int j = 0; j < clist[i].l; j++) {
-				int x = rlist[target].x, y = rlist[target].y;
-				int d = rlist[target].d;
-				if(map[x + dir[d][0]][y + dir[d][1]].num != 0){
-					cout<<"Robot "<<target<<" crashes into robot "<<map[x + dir[d][0]][y + dir[d][1]].num<<"\n";
+		case 'F':
+			for (int j = 0; j < v[i].loop; j++) {
+				int d = map[x][y].d;
+				int mx = x + dir[d][0], my = y + dir[d][1];
+				if (mx < 1 || my < 1 || mx > b || my > a) {		// ë²½ê³¼ ì¶©ëŒ
+					cout << "Robot " << map[x][y].num << " crashes into the wall\n";
 					return;
-				}else if(x + dir[d][0] < 0 || y + dir[d][1] < 0 || 
-						x + dir[d][0] >= b || y + dir[d][1] >= a)
-				{	
-					cout<<x + dir[d][0]<<","<<y + dir[d][1]<<"\n";
-					cout<<"Robot "<<target<<" crashes into the wall\n";
-					return;
-				}else{
-					map[x + dir[d][0]][y + dir[d][1]].num = map[x][y].num;
-					map[x + dir[d][0]][y + dir[d][1]].d = map[x][y].d;
-					rlist[target].x += dir[d][0];
-					rlist[target].y += dir[d][1];
-					map[x][y].num = 0;
-					map[x][y].d = 0;
 				}
+				else if (map[mx][my].num != 0) {	// ë‹¤ë¥¸ ë¡œë´‡ ì¶©ëŒ
+					cout << "Robot "<<map[x][y].num<<" crashes into robot "<<map[mx][my].num<< "\n";
+					return;
+				}
+				rbt[map[x][y].num].first = mx;
+				rbt[map[x][y].num].second = my;
+				map[mx][my] = map[x][y];
+				map[x][y].d = 0;
+				map[x][y].num = 0;
+				x = mx;
+				y = my;
 			}
 			break;
 		}
 	}
-	cout<<"OK\n";
+	cout << "OK\n";
 }
+int main()
+{
+	io;
+	cin >> a >> b;
+	cin >> n >> m;
+	for (int i = 0; i < n; i++) {
+		int x, y; 
+		char d;
+		cin >> y >> x >> d;
+		x = (b - x) + 1;
+		map[x][y].num = i+1;
+		map[x][y].d = (d == 'N' ? d = 0 : d == 'E' ? d = 1 : d == 'S' ? d = 2 : d == 'W' ? d = 3 : d = -1);
+		rbt[i + 1].first = x, rbt[i + 1].second = y;
+	}
+	for (int i = 0; i < m; i++) {
+		int num, loop;
+		char command;
+		cin >> num >> command >> loop;
+		v.push_back({ num, loop, command });
+	}
+	solve();
+	return 0;
+}
+
+/*
+#include <iostream>
+#include <vector>
+
+#define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+using namespace std;
+int a, b, n, m;
+int dir[4][2] = { {-1,0},{0,1}, {1,0},{0,-1} };	// ì‹œê³„ë°©í–¥ +1, ë°˜ì‹œê³„ë°©í–¥ -1
+struct robot {
+	int x, y, dir, num;	// 0, 1, 2, 3 N E S W ìƒ, ìš°, í•˜, ì¢Œ
+};
+struct cmd {
+	int target, loop;
+	char kind;
+};
+vector<robot> rlist;
+vector<cmd> clist;
+robot map[100][100];
+
+void solve() {
+	int size = clist.size();
+	for (int i = 0; i < size; i++) {
+		int target = clist[i].target;
+		char cmd = clist[i].kind;
+		switch (cmd) {
+		case 'L':	// ë°˜ì‹œê³„ë°©í–¥
+			int res = (rlist[target].dir + clist[i].loop) % 6;
+			if(res )
+			rlist[target].dir = (rlist[target].dir + clist[i].loop) % 6;
+			break;
+		case 'R':	// ì‹œê³„ë°©í–¥
+			rlist[target].dir = (rlist[target].dir + clist[i].loop) % 4;
+			break;
+		case 'F':
+			break;
+		}
+	}
+}
+
 int main()
 {
 	io;
@@ -75,14 +137,13 @@ int main()
 		int x, y;
 		char d;
 		cin >> x >> y >> d;
-		x--, y--;
 		int td = (d == 'N' ? 0 : d == 'E' ? 1 : d == 'S' ? 2 : d == 'W' ? 3 : -1);
-		rlist.push_back({ x,y,td,i+1 });
-		map[x][y].d = d;
-		map[x][y].num = i+1;
+		rlist.push_back({ x,y,td,i });
+		map[x][y].dir = td;
+		map[x][y].num = i;
 	}
 	for (int i = 0; i < m; i++) {
-		// Å¸°Ù, Á¾·ù, ¹İº¹ È½¼ö
+		// íƒ€ê²Ÿ, ì¢…ë¥˜, ë°˜ë³µ íšŸìˆ˜
 		int target, loop;
 		char cmd;
 		cin >> target >> cmd >> loop;
@@ -92,4 +153,4 @@ int main()
 	solve();
 	return 0;
 }
-
+*/
