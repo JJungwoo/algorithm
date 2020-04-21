@@ -1,3 +1,8 @@
+/*
+[boj] 17136. 색종이 붙이기
+전역 배열로 풀이 방법: https://hororolol.tistory.com/82
+함수에 배열 인자값 넘기는 방법: https://regularmember.tistory.com/102
+*/
 
 #include <iostream>
 #include <algorithm>
@@ -22,50 +27,6 @@ int main()
     return 0;
 }
 
-/*
-[boj] 17136. 색종이 붙이기
-전역 배열로 풀이 방법: https://hororolol.tistory.com/82
-함수에 배열 인자값 넘기는 방법: https://regularmember.tistory.com/102
-*/
-#include <iostream>
-#include <vector>
-#define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
-using namespace std;
-int ans = 50, total_cnt;
-int map[10][10];
-void solve(int cnt) 
-{
-	if (cnt >= total_cnt) return;
-	pair<int, int> p;
-	p.first = 10;
-	for (int i = 0; i < 10; i++) {
-		for (int j = 0; j < 10; j++) {
-			if (map[i][j] == 1) {
-				p = make_pair(i, j);
-				break;
-			}
-		}
-	}
-	if (p.first != 10) {
-	}
-	if (ans > cnt) {
-		ans = cnt;
-	}
-}
-int main()
-{
-	io;
-	for (int i = 0; i < 10; i++) {
-		for (int j = 0; j < 10; j++) {
-			cin >> map[i][j];
-			if (map[i][j]) {
-				total_cnt++;
-			}
-		}
-	}
-	solve(0);
-	return 0;
-}
 /*
 int ans = 987654321;
 int map[11][11];

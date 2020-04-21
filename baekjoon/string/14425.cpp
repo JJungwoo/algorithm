@@ -1,5 +1,5 @@
 /*
-[BOJ] 16916. 부분 문자열 
+[BOJ] 14425. 부분 문자열 
 */
 #include <iostream>
 #include <cstring>
@@ -7,7 +7,7 @@
 using namespace std;
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 vector<string> vm, vn;
-int n, m;
+int n, m, ans;
 int main()
 {
     io;
@@ -20,5 +20,7 @@ int main()
         string tmp; cin>>tmp;
         vm.push_back(tmp);   
     }
+    
+    cout<<ans<<"\n";
     return 0;
 }
