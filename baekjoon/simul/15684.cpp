@@ -1,15 +1,127 @@
-/*
-[boj] 15684. »ç´Ù¸® Á¶ÀÛ
-´Ü, µÎ °¡·Î¼±ÀÌ ¿¬¼ÓÇÏ°Å³ª ¼­·Î Á¢ÇÏ¸é ¾È µÈ´Ù. ¶Ç, °¡·Î¼±Àº Á¡¼± À§¿¡ ÀÖ¾î¾ß ÇÑ´Ù.
-°¡·Î¼±À» ¸¸³ª¸é °¡·Î¼±À» ÀÌ¿ëÇØ ¿· ¼¼·Î¼±À¸·Î ÀÌµ¿ÇÑ ´ÙÀ½, ÀÌµ¿ÇÑ ¼¼·Î¼±¿¡¼­ ¾Æ·¡ ¹æÇâÀ¸·Î ÀÌµ¿ÇØ¾ß ÇÑ´Ù.
+ï»¿/*
+[boj] 15684. ì‚¬ë‹¤ë¦¬ ì¡°ì‘
+ë‹¨, ë‘ ê°€ë¡œì„ ì´ ì—°ì†í•˜ê±°ë‚˜ ì„œë¡œ ì ‘í•˜ë©´ ì•ˆ ëœë‹¤. ë˜, ê°€ë¡œì„ ì€ ì ì„  ìœ„ì— ìˆì–´ì•¼ í•œë‹¤.
+ê°€ë¡œì„ ì„ ë§Œë‚˜ë©´ ê°€ë¡œì„ ì„ ì´ìš©í•´ ì˜† ì„¸ë¡œì„ ìœ¼ë¡œ ì´ë™í•œ ë‹¤ìŒ, ì´ë™í•œ ì„¸ë¡œì„ ì—ì„œ ì•„ë˜ ë°©í–¥ìœ¼ë¡œ ì´ë™í•´ì•¼ í•œë‹¤.
+ë§Œì•½, ì •ë‹µì´ 3ë³´ë‹¤ í° ê°’ì´ë©´ -1ì„ ì¶œë ¥í•œë‹¤. ë˜, ë¶ˆê°€ëŠ¥í•œ ê²½ìš°ì—ë„ -1ì„ ì¶œë ¥í•œë‹¤.
+
+ì‹œê°„ì´ˆê³¼ í•´ê²° ë°©ë²•
+copy í•¨ìˆ˜ë¥¼ inline ìœ¼ë¡œ ë°”ê¿ˆ
+ì„¸ë¡œì„  ì²´í¬í• ë•Œ í•˜ë‚˜ë¼ë„ í‹€ë¦¬ë©´ ë°”ë¡œ ì¢…ë£Œí•˜ê²Œ ìˆ˜ì •
 */
 
+#include <iostream>
+#include <vector>
+#include <cstring>
+#define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+using namespace std;
+int n, m, h, ans = 4, k = 1;	// ì„¸ë¡œ, ê°€ë¡œ, ê°€ë¡œì„ ì„ ë†“ì„ ìˆ˜ ìˆëŠ” ê³µê°„
+struct pos {
+	int x, y;
+};
+pos column[30];
+vector<pos> sel;
+int map[30][30], copymap[30][30];
+bool visited[30][30];
+inline void copy() {
+	for (int i = 0; i < h; i++) {
+		for (int j = 0; j < n; j++) {
+			copymap[i][j] = map[i][j];
+		}
+	}
+}
+void print() {
+	cout << "print \n";
+	for (int i = 0; i < h; i++) {
+		for (int j = 0; j < n; j++) {
+			cout<< copymap[i][j] << " ";
+		}
+		cout << "\n";
+	}
+	for (int i = 0; i < h; i++) {
+		for (int j = 0; j < n; j++) {
+			cout << visited[i][j] << " ";
+		}
+		cout << "\n";
+	}
+}
+void solve(int cnt, int icur) {
+	if (cnt > 3) return;
+	if (cnt <= 3) {
+		copy();
+		int tmp = k;
+		int ssize = sel.size(), check = 0;
+		for (int i = 0; i < ssize; i++) {
+			copymap[sel[i].x][sel[i].y] = tmp;
+			copymap[sel[i].x][sel[i].y + 1] = tmp++;
+		}
+		//print();
+		for (int i = 0; i < n; i++) {
+			int start = i, idx = i;
+			for (int j = 0; j < h; j++) {
+				if (copymap[j][idx] != 0) {
+					if (idx - 1 >= 0 && copymap[j][idx - 1] == copymap[j][idx]) {
+						idx--;
+					}
+					else if (idx + 1 < n && copymap[j][idx + 1] == copymap[j][idx]) {
+						idx++;
+					}
+				}
+			}
+			if (idx == start) {
+				check++;
+			}
+			else break;
+			//cout << "start :" << start << " idx: " << idx << " check:" << check << "\n";
+		}
+		if (check == n) {
+			if (ans > cnt) {
+				ans = cnt;
+			}
+		}
+	}
+
+	for (int i = icur; i < h; i++) {
+		for (int j = 0; j < n - 1; j++) {
+			if (map[i][j] == 0 && map[i][j + 1] == 0 && !visited[i][j] && !visited[i][j+1]) {
+				visited[i][j] = true;
+				visited[i][j+1] = true;
+				sel.push_back({ i, j });
+				solve(cnt + 1, i);
+				sel.pop_back();
+				visited[i][j] = false;
+				visited[i][j+1] = false;
+			}
+		}
+	}
+	
+}
+int main()
+{
+	io;
+	cin >> n >> m >> h;
+	for (int i = 0; i < m; i++) {
+		int x, y;
+		cin >> x >> y;
+		map[x - 1][y - 1] = k;
+		map[x - 1][y] = k++;
+	}
+	solve(0, 0);
+	if (ans == 4) cout << "-1\n";
+	else cout << ans << "\n";
+	return 0;
+}
+
+
+
+
+
+/*
 #include <iostream>
 #include <cstring>
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 using namespace std;
 
-int n, m, h, ans = 987654321, ncnt;	// ¼¼·Î, °¡·Î ¼±ÀÇ ¼ö, °¡·Î »ç´Ù¸® ³¡ À§Ä¡
+int n, m, h, ans = 987654321, ncnt;	// ì„¸ë¡œ, ê°€ë¡œ ì„ ì˜ ìˆ˜, ê°€ë¡œ ì‚¬ë‹¤ë¦¬ ë ìœ„ì¹˜
 int map[1][31][11];
 bool visited[31][11];
 
@@ -86,7 +198,7 @@ int main()
 	return 0;
 }
 
-
+*/
 
 /*
 #include <iostream>
@@ -94,7 +206,7 @@ int main()
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 using namespace std;
 
-int n, m, h, ans = 987654321, ncnt;	// ¼¼·Î, °¡·Î ¼±ÀÇ ¼ö, °¡·Î »ç´Ù¸® ³¡ À§Ä¡
+int n, m, h, ans = 987654321, ncnt;	// ì„¸ë¡œ, ê°€ë¡œ ì„ ì˜ ìˆ˜, ê°€ë¡œ ì‚¬ë‹¤ë¦¬ ë ìœ„ì¹˜
 int map[1][31][11];
 bool visited[31][11];
 
