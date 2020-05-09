@@ -1,0 +1,5 @@
+#input();print(sum(map(int,input())))
+input()
+m = map(int, input())
+print(list(m))
+print(tuple(m))
