@@ -1,5 +1,13 @@
 /*
-[boj] 12015. 가장 긴 증가하는 부분 수열 2
+[boj] 12015. 가장 긴 증가하는 부분 수열 4
+7
+1 6 2 4 5 3 7
+5
+1 2 3 5 7 
+
+answer 
+5
+1 2 4 5 7
 */
 
 #include <iostream>
@@ -20,10 +28,12 @@ int main()
         else if(lis.back() < a[i]) lis.push_back(a[i]);
         else {
             int idx = lower_bound(lis.begin(), lis.end(), a[i]) - lis.begin();
-            cout<<idx<<"\n";
             lis[idx] = a[i];
         }
     }
     cout<<lis.size()<<"\n";
+    for(auto it : lis)
+        cout<<it<<" ";
+    cout<<"\n";
     return 0;
 }

@@ -1,6 +1,5 @@
 /*
-[boj] 1201. NMK
-1 ~ n 까지의 증가하는 부분 수열 m 개와 감소하는 부분 수열 k 개가 되는 수열 출력하기.
+[boj] 2448. 별 찍기 - 11
 */
 
 #include <iostream>
@@ -8,10 +7,17 @@
 #include <algorithm>
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 using namespace std;
-int n, m, k;
+int star[5000][5000];
+int n;
 int main()
 {
     io;
-    cin>>n>>m>>k;
+    for(int i=0;i<3;i++){
+        for(int j=0;j<5;j++){
+            cout<<"*";
+        }
+        cout<<"\n";
+    }
+
     return 0;
 }
