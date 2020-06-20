@@ -4,9 +4,9 @@
 
 주로 백준과 프로그래머스에서 문제 풀이를 합니다.
 
-알고리즘 학습의 목적은 주로 취업 준비를 위한 코딩 테스트 준비이지만 취업후에도 꾸준히 준비하여
+알고리즘 학습의 목적은 주로 취업 준비를 위한 코딩 테스트 준비이지만 취업 후에도 꾸준히 준비해서
 
-최종 목표로는 [구글 코드잼](https://codingcompetitions.withgoogle.com/codejam) 본선 진출하는 것 입니다.
+최종 목표는 [구글 코드잼](https://codingcompetitions.withgoogle.com/codejam) 본선 진출입니다.
 
 코드에 문제가 있거나 따로 문의 하실 내용이 있다면 [메일](jungwoo5759@gmail.com)이나 pr 부탁드립니다. 
 
