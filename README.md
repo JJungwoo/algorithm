@@ -25,6 +25,19 @@
 - 동적 계획법
   - N으로 표현
   
+- 탐욕법(Greedy)
+  - [체육복](https://github.com/JJungwoo/algorithm/blob/master/programmers/greedy/%EC%B2%B4%EC%9C%A1%EB%B3%B5.cpp)
+  - [큰 수 만들기](https://github.com/JJungwoo/algorithm/blob/master/programmers/greedy/%ED%81%B0%EC%88%98%EB%A7%8C%EB%93%A4%EA%B8%B0.cpp)
+  - [조이스틱](https://github.com/JJungwoo/algorithm/blob/master/programmers/greedy/%EC%A1%B0%EC%9D%B4%EC%8A%A4%ED%8B%B1.cpp)
+  - [구명보트](https://github.com/JJungwoo/algorithm/blob/master/programmers/greedy/%EA%B5%AC%EB%AA%85%EB%B3%B4%ED%8A%B8.cpp)
+  - [단속카메라](https://github.com/JJungwoo/algorithm/blob/master/programmers/greedy/%EB%8B%A8%EC%86%8D%EC%B9%B4%EB%A9%94%EB%9D%BC.cpp)
+  - [섬 연결하기](https://github.com/JJungwoo/algorithm/blob/master/programmers/greedy/%EC%84%AC%EC%97%B0%EA%B2%B0%ED%95%98%EA%B8%B0.cpp)
+  - [저울](https://github.com/JJungwoo/algorithm/blob/master/programmers/greedy/%EC%A0%80%EC%9A%B8.cpp)
+  
+- 그래프
+  - [가장 먼 노드](https://github.com/JJungwoo/algorithm/blob/master/programmers/graph/%EA%B0%80%EC%9E%A5%EB%A8%BC%EB%85%B8%EB%93%9C.cpp)
+  - [순위](https://github.com/JJungwoo/algorithm/blob/master/programmers/graph/%EC%88%9C%EC%9C%84.cpp)
+  
 ## Baekjoon
 
 ### Code Plus
