@@ -1,4 +1,4 @@
-
+/*
 #include <iostream>
 #include <cstring>
 #include <vector>
@@ -36,8 +36,8 @@ int main()
     cout<<answer<<"\n";
     return 0;
 }
+*/
 
-/*
 
 
 #include<iostream>
@@ -142,4 +142,3 @@ int main(){
    return 0;
 } 
 
-*/

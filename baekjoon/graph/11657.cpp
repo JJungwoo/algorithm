@@ -7,7 +7,7 @@
 #include <algorithm>
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 using namespace std;
-const int INF = 1000000000;
+const int INF = 987654321;
 int n, m;
 vector<pair<int, int> > city[500];
 int dist[500];

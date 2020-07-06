@@ -1,5 +1,6 @@
 /*
-[boj] 
+[boj] 12970. AB 
+https://www.acmicpc.net/problem/12970
 */
 
 #include <iostream>
