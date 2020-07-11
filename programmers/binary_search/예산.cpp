@@ -1,42 +1,31 @@
 #include <string>
 #include <vector>
-#include <iostream>
-#include <algorithm>
 using namespace std;
-
-bool find(int value, int cnt, int remain){
-    return ((value * cnt) < remain);
-}
-
-int find_stand(int max, int stand, int cnt, int remain){
-    int start = stand, end = max;
-    while(start < end){
-        int mid = (start + end) / 2;
-        cout<<"find_stand: "<<start<<", "<<end<<" : "<<mid<<"\n";
-        if(find(mid, cnt, remain) == true){
-            start = mid + 1;
-        }else {
-            end = mid - 1;
-        }
+typedef long long ll;
+ll find(vector<int> tmp, int value){
+    ll sum = 0;
+    for(auto it : tmp){
+        sum += min(it, value);
     }
-    return end;
+    return sum;
 }
-
 int solution(vector<int> budgets, int M) {
-    int answer = 0;
-    int size = budgets.size();
-    sort(budgets.begin(), budgets.end());
-    int stand = M/size;
+    int answer = 0, sum = 0, max_val = 0;
     for(auto it : budgets){
-        cout<<it<<"\n";
-        if(it < stand){
-            size--;
-            M -= it;
-        }
-        else {
-            answer = find_stand(it, stand, size, M);
-            break;
+        sum += it;
+        max_val = max(max_val, it);
+    }
+    int lo = 0, hi = 1000000001;
+    while(lo < hi){
+        int mid = (lo+hi)/2;
+        if(find(budgets, mid) >= M){
+            hi = mid;
+        }else{
+            lo = mid + 1;
         }
     }
+    answer = hi - 1;
+    
+    if(sum <= M && answer > M) return max_val;
     return answer;
 }
