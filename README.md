@@ -13,14 +13,28 @@
 ## index
 
 - Programmers
+- Baekjoon
 
 ## Programmers
 
 ### 코딩테스트 고득점 Kit
 
+- 해시
+  - [전화번호 목록](https://github.com/JJungwoo/algorithm/blob/master/programmers/hash/%EC%A0%84%ED%99%94%EB%B2%88%ED%98%B8_%EB%AA%A9%EB%A1%9D.cpp)
+  - [위장](https://github.com/JJungwoo/algorithm/blob/master/programmers/hash/%EC%9C%84%EC%9E%A5.cpp)
+
 - 스택/큐
   - [프린터](https://github.com/JJungwoo/algorithm/blob/master/programmers/queue/%ED%94%84%EB%A6%B0%ED%84%B0.cpp)
   - [쇠막대기](https://github.com/JJungwoo/algorithm/blob/master/programmers/level2/%EC%87%A0%EB%A7%89%EB%8C%80%EA%B8%B0.cpp)
+
+- 힙(Heap)
+  - [더 맵게](https://github.com/JJungwoo/algorithm/blob/master/programmers/heap/%EB%8D%94%EB%A7%B5%EA%B2%8C.cpp)
+  
+- 정렬
+  - K번째수
+  
+- 완전탐색
+  - [모의고사](https://github.com/JJungwoo/algorithm/blob/master/programmers/brute_force/%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC.cpp)
 
 - 동적 계획법
   - N으로 표현
@@ -33,7 +47,10 @@
   - [단속카메라](https://github.com/JJungwoo/algorithm/blob/master/programmers/greedy/%EB%8B%A8%EC%86%8D%EC%B9%B4%EB%A9%94%EB%9D%BC.cpp)
   - [섬 연결하기](https://github.com/JJungwoo/algorithm/blob/master/programmers/greedy/%EC%84%AC%EC%97%B0%EA%B2%B0%ED%95%98%EA%B8%B0.cpp)
   - [저울](https://github.com/JJungwoo/algorithm/blob/master/programmers/greedy/%EC%A0%80%EC%9A%B8.cpp)
-  
+ 
+- 이분탐색
+  - [예산](https://github.com/JJungwoo/algorithm/blob/master/programmers/binary_search/%EC%98%88%EC%82%B0.cpp)
+ 
 - 그래프
   - [가장 먼 노드](https://github.com/JJungwoo/algorithm/blob/master/programmers/graph/%EA%B0%80%EC%9E%A5%EB%A8%BC%EB%85%B8%EB%93%9C.cpp)
   - [순위](https://github.com/JJungwoo/algorithm/blob/master/programmers/graph/%EC%88%9C%EC%9C%84.cpp)
