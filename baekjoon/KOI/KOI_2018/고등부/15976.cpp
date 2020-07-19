@@ -1,3 +1,7 @@
+/*
+[boj] 15976. XCorr
+https://www.acmicpc.net/problem/15976
+*/
 
 #include <iostream>
 #include <vector>

@@ -1,6 +1,8 @@
 /*
 [boj] 9576. 책 나눠주기
 https://www.acmicpc.net/problem/9576
+뒤에서부터 정렬하면 틀림.. 왜?? 회의실 배정 문제 다시 이해하기
+https://www.acmicpc.net/board/view/41001
 */
 #include <iostream>
 #include <vector>
@@ -43,7 +45,7 @@ int main()
 }
 
 /*
-// 뒤에서부터 정렬하면 틀림.. 왜??
+// 뒤에서부터 세컨드, 퍼스트 기준으로 정렬함.
 
 #include <iostream>
 #include <vector>
