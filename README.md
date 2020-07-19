@@ -8,12 +8,12 @@
 
 최종 목표는 [구글 코드잼](https://codingcompetitions.withgoogle.com/codejam) 본선 진출입니다.
 
-코드에 문제가 있거나 따로 문의 하실 내용이 있다면 [메일](jungwoo5759@gmail.com)이나 pr 부탁드립니다. 
+코드에 문제가 있거나 따로 문의 하실 내용이 있다면 메일이나 pr 부탁드립니다. 
 
 ## index
 
-- Programmers
-- Baekjoon
+- [Programmers](Programmers)
+- [Baekjoon](Baekjoon)
 
 ## Programmers
 
@@ -57,5 +57,15 @@
   
 ## Baekjoon
 
-### Code Plus
+- 그리디
+  - [10610. 30](https://github.com/JJungwoo/algorithm/blob/master/baekjoon/greedy/10610.cpp)
+  - [1931. 회의실배정](https://github.com/JJungwoo/algorithm/blob/master/baekjoon/greedy/1080.cpp)
+  - [1202. 보석 도둑](https://github.com/JJungwoo/algorithm/blob/master/baekjoon/greedy/1202.cpp)
+  - [1507. 궁금한 민호](https://github.com/JJungwoo/algorithm/blob/master/baekjoon/greedy/1507.cpp)
+  - [1744. 수 묶기](https://github.com/JJungwoo/algorithm/blob/master/baekjoon/greedy/1744.cpp)
+  - [2109. 순회강연](https://github.com/JJungwoo/algorithm/blob/master/baekjoon/greedy/2109.cpp)
+  - [5585. 거스름돈](https://github.com/JJungwoo/algorithm/blob/master/baekjoon/greedy/5585.cpp)
+  - [8980. 택배](https://github.com/JJungwoo/algorithm/blob/master/baekjoon/greedy/8980.cpp)
+  - [9576. 책 나눠주기[(https://github.com/JJungwoo/algorithm/blob/master/baekjoon/greedy/9576.cpp)
+  
 
