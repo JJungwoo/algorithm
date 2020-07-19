@@ -12,8 +12,8 @@
 
 ## index
 
-- [Programmers](Programmers)
-- [Baekjoon](Baekjoon)
+- Programmers
+- Baekjoon
 
 ## Programmers
 
@@ -66,6 +66,6 @@
   - [2109. 순회강연](https://github.com/JJungwoo/algorithm/blob/master/baekjoon/greedy/2109.cpp)
   - [5585. 거스름돈](https://github.com/JJungwoo/algorithm/blob/master/baekjoon/greedy/5585.cpp)
   - [8980. 택배](https://github.com/JJungwoo/algorithm/blob/master/baekjoon/greedy/8980.cpp)
-  - [9576. 책 나눠주기[(https://github.com/JJungwoo/algorithm/blob/master/baekjoon/greedy/9576.cpp)
+  - [9576. 책 나눠주기](https://github.com/JJungwoo/algorithm/blob/master/baekjoon/greedy/9576.cpp)
   
 
