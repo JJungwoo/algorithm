@@ -7,11 +7,11 @@ https://leetcode.com/problems/open-the-lock/
 #include <vector>
 #include <string>
 #include <queue>
-#include <set>
+#include <unordered_set>
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 using namespace std;
 
-set<string> trap, path;
+unordered_set<string> trap, path;
 
 class Solution {
 public:
