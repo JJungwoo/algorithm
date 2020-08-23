@@ -1,5 +1,5 @@
 /*
-[LeetCode] 752. Lexicographical Numbers
+[LeetCode] 386. Lexicographical Numbers
 https://leetcode.com/problems/lexicographical-numbers/
 */
 

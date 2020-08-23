@@ -3,6 +3,11 @@
 https://leetcode.com/problems/reducing-dishes/
 */
 
+#include <iostream>
+#include <vector>
+#define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+using namespace std;
+
 class Solution {
 public:
     vector<int> tmp;
