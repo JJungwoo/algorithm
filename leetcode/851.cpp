@@ -1,6 +1,13 @@
 /*
 [LeetCode] 851. Loud and Rich
 https://leetcode.com/problems/loud-and-rich/
+
+Input: 
+richer = [[1,0],[2,1],[3,1],[3,7],[4,3],[5,3],[6,3]]
+quiet = [3,2,5,4,6,1,7,0]
+
+Output: 
+[5,5,2,5,4,5,6,7]
 */
 
 #include <iostream>
@@ -10,38 +17,27 @@ https://leetcode.com/problems/loud-and-rich/
 #include <map>
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 using namespace std;
+
 class Solution {
 public:
     vector<int> ans;
-    vector<int> g_quit;
     vector<int> path[501];
-    bool visited[501];
-    int tmin, minIdx;
-    void dfs(int idx) {
-        visited[idx] = true;
-        if(tmin > g_quit[idx]) {
-            tmin = g_quit[idx];
-            minIdx = idx;
-        }
-        
+    int dfs(int idx, vector<int>& quiet) {
+        if(ans[idx] >= 0) return ans[idx];
+        ans[idx] = idx;
         for(auto it : path[idx]) {
-            if(visited[it]) continue;
-            dfs(it);
+            if(quiet[ans[idx]] > quiet[dfs(it, quiet)])
+                ans[idx] = ans[it];
         }
+        return ans[idx];
     }
     vector<int> loudAndRich(vector<vector<int>>& richer, vector<int>& quiet) {
-        int maxIdx = 0;
-        g_quit = quiet;
         for(int i=0;i<richer.size();i++) {
             path[richer[i][1]].push_back(richer[i][0]);
         }
-        
+        ans.resize(quiet.size(), -1);
         for(int i=0;i<quiet.size();i++) {
-            tmin = quiet[i];
-            minIdx = i;
-            memset(visited, 0, sizeof(visited));
-            dfs(i);
-            ans.push_back(minIdx);
+            ans[i] = dfs(i, quiet);
         }
 
         return ans;
@@ -51,10 +47,8 @@ public:
 int main()
 {
     io;
-    int n;
-    cin>>n;
-    Solution solution = Solution();
-    vector<int> result = solution.loudAndRich(n);
+    //Solution solution = Solution();
+    //vector<int> result = solution.loudAndRich();
 
     return 0;
 }
