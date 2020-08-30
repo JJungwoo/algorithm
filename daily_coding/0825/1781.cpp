@@ -23,14 +23,12 @@ int main()
     sort(vp.begin(), vp.end());
     priority_queue<int> pq;
     for(auto it : vp) {
-        cout<<it.first<<" "<<it.second<<"\n";
         pq.push(-it.second);
         if(pq.size() > it.first) {
             pq.pop();
         }
     }
     while(!pq.empty()){
-        cout<<pq.top()<<" , "<<ans<<"\n";
         ans += pq.top();
         pq.pop();
     }
