@@ -11,15 +11,6 @@ using namespace std;
 
 int field[52][52];
 bool visited[52][52];
-void print_map(int N, int M) {
-    cout<<"print_map\n";
-    for(int i=0;i<=N+1;i++) {
-        for(int j=0;j<=M+1;j++) {
-            cout<<visited[i][j]<<" ";
-        }
-        cout<<"\n";
-    }
-}
 int bfs(int n, int m, int r, int c, int l) {
     queue<pair<pair<int, int>, int> > q;
     q.push(make_pair(make_pair(r, c), l - 1));
@@ -30,9 +21,6 @@ int bfs(int n, int m, int r, int c, int l) {
         q.pop();
         if(time == 0)
             break;
-        
-        //cout<<"x: "<<x<<"y: "<<y<<" time: "<<time<<"\n";
-        //print_map(n, m);
         
         switch(field[x][y]) {
             case 1:
@@ -147,4 +135,3 @@ int main()
     }
     return 0;
 }
-
