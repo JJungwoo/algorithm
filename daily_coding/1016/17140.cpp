@@ -18,7 +18,6 @@ bool cmp(pair<int, int> A, pair<int, int> B) {
     else return A.second < B.second;
 }
 inline bool check_array(int x, int y, int target, int stand) {
-    cout<<"check_array : "<<x<<" "<<y<<" "<<target<<" == "<<map[x][y][stand]<<"\n";
     if(map[x][y][stand] == target) return true;
     else return false;
 }
@@ -33,7 +32,6 @@ void print_map(int stand) {
 }
 void roperation(int stand) {
     int maxidx = 0;
-    cout<<"R\n";
     for(int i=0;i<row;i++) {
         vector<pair<int, int> > v;
         unordered_map<int, int> umap;
@@ -42,13 +40,15 @@ void roperation(int stand) {
             umap[map[i][j][stand]]++;
         }
         for(auto it : umap) {
-            cout<<it.first<<" "<<it.second<<"\n";
             v.push_back(make_pair(it.first, it.second));
         }
         sort(v.begin(), v.end(), cmp);
         int idx = 0;
         for(auto it : v) {
-            if(idx > 100) break;
+            if(idx > 100) {
+                break;
+                maxidx = 100;
+            }
             map[i][idx++][stand^1] = it.first;
             map[i][idx++][stand^1] = it.second;
         }
@@ -58,7 +58,6 @@ void roperation(int stand) {
 }
 void coperation(int stand) {
     int maxidx = 0;
-    cout<<"C\n";
     for(int j=0;j<col;j++) {
         vector<pair<int, int> > v;
         unordered_map<int, int> umap;
@@ -67,13 +66,15 @@ void coperation(int stand) {
             umap[map[i][j][stand]]++;
         }
         for(auto it : umap) {
-            cout<<it.first<<" "<<it.second<<"\n";
             v.push_back(make_pair(it.first, it.second));
         }
         sort(v.begin(), v.end(), cmp);
         int idx = 0;
         for(auto it : v) {
-            if(idx > 100) break;
+            if(idx > 100) {
+                break;
+                maxidx = 100;
+            }
             map[idx++][j][stand^1] = it.first;
             map[idx++][j][stand^1] = it.second;
         }
@@ -82,28 +83,29 @@ void coperation(int stand) {
     row = maxidx;
 }
 void clear_map(int stand) {
-    for(int i=0;i<row;i++) {
-        for(int j=0;j<col;j++) {
-            map[i][j][stand^1] = 0;
+    for(int i=0;i<101;i++) {
+        for(int j=0;j<101;j++) {
+            map[i][j][stand] = 0;
         }
     }
 }
 void solve() {
     int answer = -1, cur = 0;
     for(int i=1;i<=4;i++) {
+        //cout<<"cur: "<<cur<<"<->"<<(cur^1)<<"\n";
         if(row >= col) {
             roperation(cur);
         }else if(row < col) {
             coperation(cur);
         }
         cur ^= 1;
-        print_map(cur);
+        //print_map(cur);
         //print_map(cur^1);
         if(check_array(R, C, K, cur)){
             answer = i;
             break;
         }
-        clear_map(cur);
+        clear_map(cur^1);
         //copy_and_paste(cur);
         //cur ^= 1;
     }
