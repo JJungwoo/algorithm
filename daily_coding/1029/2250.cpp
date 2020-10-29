@@ -5,37 +5,32 @@ https://www.acmicpc.net/problem/2250
 */
 
 #include <iostream>
-#include <vector>
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 using namespace std;
-pair<int, int> mm[11];    // 각 레벨의 너비를 구하기 위한 벡터
-vector<int> map[10001];
-int N, quadrangle[10001][11], gidx = 1, glevel;
+const int INF = 987654321;
+pair<int, int> map[10001];
+int N, gidx = 1;
+int low[10001], high[10001], find_parent[10001];
 void find_child(int cur, int level) {
-    if(map[cur][0] != -1) 
-        find_child(map[cur][0], level+1);
-    quadrangle[level][gidx] = cur;
-    if(mm[level].first == 0 || mm[level].first > gidx)
-        mm[level].first = gidx;
-    if(mm[level].second == 0 || mm[level].second < gidx)
-        mm[level].second = gidx;
+    if(map[cur].first > 0) 
+        find_child(map[cur].first, level+1);
+    low[level] = min(low[level], gidx);
+    high[level] = max(high[level], gidx);
     gidx++;
-    glevel = max(glevel, level);
-    if(map[cur][1] != -1)
-        find_child(map[cur][1], level+1);
+    if(map[cur].second > 0)
+        find_child(map[cur].second, level+1);
 }
 int main() 
 {
     io;
     cin >> N;
     int root = 0;
-    vector<int> find_parent(N+1, 0);
-    for(int i=0;i<N;i++) {
+    for(int i=1;i<=N;i++) {
         int A, B, C;
         cin >> A >> B >> C;
-        map[A].push_back(B);
-        map[A].push_back(C);
+        map[A].first = B, map[A].second = C;
         find_parent[B] = find_parent[C] = 1;
+        low[i] = INF;
     }
     for(int i=1;i<=N;i++) {
         if(find_parent[i] == 0) {
@@ -45,8 +40,8 @@ int main()
     }
     find_child(root, 1);
     int maxdiff = 0, answer = 0;
-    for(int i=1;i<=glevel;i++) {
-        int diff = mm[i].second - mm[i].first + 1;
+    for(int i=1;i<=N;i++) {
+        int diff = high[i] - low[i] + 1;
         if(maxdiff < diff) {
             maxdiff = diff;
             answer = i;
