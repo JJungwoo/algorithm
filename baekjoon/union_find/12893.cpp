@@ -1,6 +1,6 @@
 /*
-[boj] 
-https://www.acmicpc.net/problem/
+[boj] 12893. 적의 적
+https://www.acmicpc.net/problem/12893
 */
 
 #include <iostream>
