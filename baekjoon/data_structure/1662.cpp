@@ -6,68 +6,33 @@ https://www.acmicpc.net/problem/1662
 #include <bits/stdc++.h>
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 using namespace std;
-
+string S;
+stack<int> st;
+int visited[50];
+int solve(int s, int e) {
+    int res = 0;
+    for(int i=s;i<e;i++) {
+        if(S[i] == '(') {
+            int cnt = S[i-1] - '0';
+            res += cnt * solve(i+1, visited[i]) - 1;
+            i = visited[i];
+            continue;
+        }
+        res++;
+    }
+    return res;
+}
 int main()
 {
     io;
-    string S, ans = "", buf = "";
     cin >> S;
-    stack<string> stc, sti;
-    bool chk = false;
-    for(int i=S.length()-1;i>=0;i--) {
-        if(S[i] == ')') {
-            if (!sti.empty()) {
-                ans += sti.top();
-                sti.pop();
-            }
-            stc.push(")");
+    for(int i=0;i<S.length();i++) {
+        if(S[i] == '(') st.push(i);
+        else if(S[i] == ')') {
+            visited[st.top()] = i;
+            st.pop();
         }
-        else if(S[i] == '(') {
-            string tmp = "";
-            if(stc.empty()) goto end;
-            if (!sti.empty()) {
-                tmp = sti.top();
-                sti.pop();
-                sti.push(tmp);
-            }
-            if (stc.top() == ")") 
-                stc.pop();
-            chk = true;
-        } else {
-            if (chk) {
-                int loop = (int)(S[i] - '0');
-                if (!sti.empty()) {
-                    string tmp = sti.top(); sti.pop();
-                    while(loop--) {
-                        buf += tmp;
-                    }
-                    sti.push(buf);
-                    buf = "";
-                }
-                chk = false;
-            } else {
-                if (!sti.empty()) {
-                    string tmp = "";
-                    tmp += S[i];
-                    tmp += sti.top();
-                    sti.pop();
-                    sti.push(tmp);
-                }
-                else
-                    sti.push(to_string(S[i]-'0'));
-            }
-        }   
-
     }
-
-    if(!sti.empty()) {
-        ans += sti.top();
-        cout<<ans.length()<<"\n";
-    }else{
-end: 
-    cout<<"0\n";
-    }
-    
-    
+    cout<<solve(0, S.length())<<"\n";
     return 0;
 }
