@@ -3,7 +3,7 @@
 https://www.acmicpc.net/problem/
 */
 
-#include <iostream>
+#include <bits/stdc++.h>
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 using namespace std;
 
