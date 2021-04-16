@@ -1,0 +1,64 @@
+/*
+[boj] 1005. ACM Crat
+https://www.acmicpc.net/problem/1005
+*/
+
+#include <bits/stdc++.h>
+#define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+using namespace std;
+#define START_POINT 0
+#define MAX_INT 1e9
+int N, K, W;
+int building[1001];
+vector<int> dp;
+vector<int> pos[1001];
+void all_clear() {
+    dp.clear();
+    dp.resize(N, -MAX_INT);
+    for(int i=0;i<N;i++) {
+        pos[i].clear();
+    }
+}
+bool go_build(int idx) {
+    if (idx == W) {
+        return true;
+    }
+    
+    for(int next : pos[idx]) {
+        if (dp[idx] + building[next] > dp[next]) {
+            dp[next] = dp[idx] + building[next];
+            go_build(next);
+        }
+    }
+    return false;
+}
+int main() 
+{
+    io;
+    int T;
+    cin >> T;
+    while(T--) {
+        cin >> N >> K;
+        vector<int> way_count(N, 0);
+        all_clear();
+        for(int i=0;i<N;i++) {
+            cin >> building[i];
+        }
+        for(int i=0;i<K;i++) {
+            int X, Y;
+            cin >> X >> Y;
+            pos[X-1].push_back(Y-1);
+            way_count[Y-1]++;
+        }
+        cin >> W;
+        W--;
+        // find start point
+        for(int i=0;i<N;i++)
+            if (way_count[i] == START_POINT && dp[i] == -MAX_INT) {
+                dp[i] = building[i];
+                if(go_build(i)) break;
+            }
+        cout << dp[W] << "\n";
+    }
+    return 0;
+}
