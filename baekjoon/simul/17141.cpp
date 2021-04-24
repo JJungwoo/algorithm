@@ -1,100 +1,83 @@
 /*
-[BOJ] 17141. 연구소 2
+[boj] 17141. 연구소 2
+https://www.acmicpc.net/problem/17141
 */
 
-#include <iostream>
-#include <queue>
-#include <vector>
-#include <cstring>
-using namespace std;
+#include <bits/stdc++.h>
 #define io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
-int n, m, ans = 987654321;
-int map[50][50], copymap[50][50];
-int dir[4][2] = {{-1,0},{1,0},{0,-1},{0,1}};
-bool visited[50][50];
-vector<pair<int, int> > virus;
-void copy_map(){
-    for(int i=0;i<n;i++){
-        for(int j=0;j<n;j++){
-            copymap[i][j] = map[i][j];
+using namespace std;
+#define MAX_INT 2500
+const int dir[4][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1} };
+int N, M, answer = MAX_INT, zeroCnt;
+int field[51][51];
+bool visited[10], tmp_field[51][51];
+vector<pair<int, int>> virus, start_pos;
+struct obj {
+    int x, y, cnt;
+};
+bool check_field() {
+    int cnt = 0;
+    for(int i=0;i<N;i++) {
+        for(int j=0;j<N;j++) {
+            if (tmp_field[i][j]) 
+                cnt++;
         }
+    }
+    return (cnt - virus.size() == zeroCnt ? true : false);
+}
+void bfs() {
+    queue<obj> q;
+    memset(tmp_field, 0, sizeof(tmp_field));
+    for(auto it : start_pos) {
+        q.push({it.first, it.second, 0});
+        tmp_field[it.first][it.second] = true;
+    }
+    int max_cnt = 0;
+    while(!q.empty()) {
+        obj cur = q.front(); q.pop();
+        max_cnt = max(max_cnt, cur.cnt);
+        for(int i=0;i<4;i++) {
+            int nx = cur.x + dir[i][0], ny = cur.y + dir[i][1];
+            if (nx < 0 || ny < 0 || nx >= N || ny >= N) continue;
+            if (field[nx][ny] == 1) continue;
+            if (tmp_field[nx][ny]) continue;
+            tmp_field[nx][ny] = true;
+            q.push({nx, ny, cur.cnt+1});
+        }
+    }
+    if (check_field()) {
+        answer = min(answer, max_cnt);
     }
 }
-void print(){
-    cout<<"print\n";
-    for(int i=0;i<n;i++){
-        for(int j=0;j<n;j++){
-            cout<<copymap[i][j]<<" ";
-        }
-        cout<<"\n";
-    }
- 
-}
-int bfs(){
-    int maxcnt = 0;
-    queue<pair<pair<int, int>,int > > q;
-    int vsize = virus.size();
-    bool vv[50][50];
-    memset(vv, 0, sizeof(vv));
-    copy_map();
-    for(int i=0;i<vsize;i++){
-        copymap[virus[i].first][virus[i].second] = 0;
-        q.push(make_pair(make_pair(virus[i].first, virus[i].second), 0));
-        vv[virus[i].first][virus[i].second] = true;
-    }
-    while(!q.empty()){
-        int x = q.front().first.first, y = q.front().first.second;
-        int cnt = q.front().second;
-        q.pop();
-        if(maxcnt < cnt){
-            maxcnt = cnt;
-        }
-        for(int i=0;i<4;i++){
-            int mx = x + dir[i][0], my = y + dir[i][1];
-            if(mx < 0 || my < 0 || mx >= n || my >= n) continue;
-            if(map[mx][my] != 0) continue;
-            if(vv[mx][my]) continue;
-            copymap[mx][my] = cnt+1;
-            vv[mx][my] = true;
-            q.push(make_pair(make_pair(mx, my), cnt+1));
-        }
-    }
-    //print();
-    return maxcnt;
-}
-void solve(int cnt){
-    if(cnt == m){
-        int tmp = bfs();
-        if(ans > tmp){
-            ans = tmp;
-        }
-        return;
+void dfs(int idx, int cnt) {
+    if (cnt == M) {
+        bfs();
+        return ;
     }
 
-    for(int i=0;i<n;i++){
-        for(int j=0;j<n;j++){
-            if(visited[i][j]) continue;
-            if(map[i][j] == -1) continue;
-            visited[i][j] = true;
-            virus.push_back(make_pair(i, j));
-            solve(cnt+1);
-            virus.pop_back();
-            visited[i][j] = false;
-        }
+    for(int i=idx;i<virus.size();i++) {
+        if (visited[i]) continue;
+        visited[i] = true;
+        start_pos.push_back(virus[i]);
+        dfs(i, cnt+1);
+        start_pos.pop_back();
+        visited[i] = false;
     }
 }
-int main()
-{
+int main() {
     io;
-    cin>>n>>m;
-    for(int i=0;i<n;i++){
-        for(int j=0;j<n;j++){
-            cin>>map[i][j];
-            if(map[i][j] == 1) map[i][j] = -1;
+    cin >> N >> M;
+    for(int i=0;i<N;i++) {
+        for(int j=0;j<N;j++) {
+            cin >> field[i][j];
+            if (field[i][j] == 2) {
+                virus.push_back({i, j});
+            } else if (field[i][j] == 0) {
+                zeroCnt++;
+            }
         }
     }
-    solve(0);
-    if(ans == 987654321) cout<<"-1\n";
-    else cout<<ans<<"\n";
+    dfs(0, 0);
+    cout << (answer == MAX_INT ? -1 : answer) << "\n";
     return 0;
 }
