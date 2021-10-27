@@ -3,42 +3,24 @@
 https://programmers.co.kr/learn/courses/30/lessons/87946
 */
 
-import java.util.*;
 class Solution {
-    public int solution(int n, int[][] wires) {
-        int answer = 100;
-        List<Integer>[] list = new ArrayList[n + 1];
-        boolean[] visited = new boolean[n + 1];
-        for (int i=1;i<=n;i++) {
-            list[i] = new ArrayList<Integer>();
-        }
-        for (int i=0;i<wires.length;i++) {
-            list[wires[i][0]].add(wires[i][1]);
-            list[wires[i][1]].add(wires[i][0]);
-        }
-        for (int i=1;i<=n;i++) {
-            for (int j=0;j<list[i].size();j++) {
-                visited[list[i].get(j)] = true;
-                answer = Math.min(answer, bfs(i, list, visited, n));
-                Arrays.fill(visited, false);
-            }
-        }
-        return answer;
+    boolean[] visited;
+    int ans;
+    public int solution(int k, int[][] dungeons) {
+        int answer = -1;
+        visited = new boolean[dungeons.length];
+        dfs(k, 0, dungeons);
+        return answer = ans;
     }
-    private int bfs(int start, List<Integer>[] list, boolean[] visited, int n) {
-        int ret = 0;
-        Queue<Integer> q = new LinkedList<>();
-        visited[start] = true;
-        q.offer(start);
-        while (!q.isEmpty()) {
-            int cur = q.poll();
-            ret++;
-            for (int next : list[cur]) {
-                if (visited[next]) continue;
-                visited[next] = true;
-                q.offer(next);
-            }
+    
+    public void dfs(int life, int cnt, int[][] dungeons) {
+        ans = Math.max(ans, cnt);
+        
+        for (int i=0;i<dungeons.length;i++) {
+            if (visited[i] || life < dungeons[i][0]) continue;
+            visited[i] = true;
+            dfs(life - dungeons[i][1], cnt + 1, dungeons);
+            visited[i] = false;
         }
-        return Math.abs((n - ret) - ret);
     }
 }
